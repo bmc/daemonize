@@ -157,22 +157,6 @@ if test "$local_cv_have_false" = "yes" ; then
     AC_DEFINE(HAVE_FALSE)
 fi
 
-dnl ***
-dnl Predefined `byte' type
-
-AC_CACHE_CHECK([for predefined 'byte' type], local_cv_have_byte,
-	       AC_TRY_COMPILE([
-#include <stddef.h>
-#include <stdio.h>
-#include <stdlib.h>],
-			      [byte b;],
-			      local_cv_have_byte=yes,
-			      local_cv_have_byte=no))
-
-if test "$local_cv_have_byte" = "yes" ; then
-    AC_DEFINE(HAVE_BYTE_TYPE)
-fi
-
 dnl ---------------------------------------------------------------------------
 dnl Checks for library functions.
 dnl ---------------------------------------------------------------------------
@@ -200,9 +184,6 @@ dnl Generate a list of missing functions that we desperately require.
 dnl Any missing functions, below, will be replaced with emulators if 
 dnl necessary; the value of RUNAS_MISSING_SOURCES will be substituted into
 dnl the "portability" Makefile.
-dnl
-dnl NOTE: AC_FUNC_MEMCMP adds 'memcmp.o' to LIBOBJS if the test fails.
-dnl So, we start out by editing that macro.
 
 AC_CHECK_FUNC(strerror, AC_DEFINE(HAVE_STRERROR),
 	      LOCAL_MISSING_SOURCES="${LOCAL_MISSING_SOURCES} strerror.c")
@@ -243,6 +224,7 @@ dnl ---------------------------------------------------------------------------
 
 echo ""
 echo "***"
-echo "*** Please be sure to read the LICENSE file, in this directory."
+echo "*** This software is released under the GNU Public License."
+echo "*** See the COPYING file distributed with the source."
 echo "***"
 echo ""
