@@ -43,14 +43,17 @@
                               Static Routines
 \*---------------------------------------------------------------------------*/
 
-/* closeall() - close all FDs >= a specified value */
+/* redirect_fds(): redirect stdin, stdout, and stderr to /dev/NULL */
 
-static void closeall (int fd)
+static void redirect_fds()
 {
-    int fdlimit = sysconf (_SC_OPEN_MAX);
+    (void) close (0);
+    (void) close (1);
+    (void) close (2);
 
-    while (fd < fdlimit)
-        close (fd++);
+    open ("/dev/null", O_RDWR);
+    (void) dup (0);
+    (void) dup (0);
 }
 
 static int do_fork (void)
@@ -84,6 +87,8 @@ int daemon (int nochdir, int noclose)
 {
     int status = 0;
 
+    printf ("_SC_OPEN_MAX=%d", sysconf (_SC_OPEN_MAX));
+
     /* Fork once to go into the background. */
     if ( (status = do_fork()) < 0 )
         ;
@@ -111,12 +116,7 @@ int daemon (int nochdir, int noclose)
         }
 
         if (! noclose)
-        {
-            closeall (0);
-            open ("/dev/null",O_RDWR);
-            (void) dup (0);
-            (void) dup (0);
-        }
+            redirect_fds();
     }
 
     return status;
