@@ -205,11 +205,6 @@ int main (int argc, char **argv)
     if (user != NULL)
         switchUser (user, pidFile, uid);
 
-    /*
-      Change directory here, as well as after we've daemonized. That way,
-      if the directory isn't accessible, the user will actually see a
-      meaningful error message.
-    */
     if (chdir (cwd) != 0)
     {
 	die ("Can't change working directory to \"%s\": %s\n",
@@ -217,7 +212,7 @@ int main (int argc, char **argv)
     }
 
     verbose ("Daemonizing...");
-    if (daemon (0, 0) != 0)
+    if (daemon (1, 0) != 0)
         die ("Can't daemonize: %s\n", strerror (errno));
 
     if (fPid != NULL)
