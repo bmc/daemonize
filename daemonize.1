@@ -50,7 +50,7 @@ itself from signals (such as HUP) sent to the process group
 .IP \(bu 2
 Ignore all terminal I/O signals
 .IP \(bu 2
-Disassociate from the control terminal (and takes steps not to reacquire one)
+Disassociate from the control terminal (and take steps not to reacquire one)
 .IP \(bu 2
 Handle any
 .SM SIGCLD
@@ -65,7 +65,8 @@ to force it to run as a true daemon.
 .SH OPTIONS
 .PP
 .IP "-c \fIdirectory\fP"
-Specifies the directory to 
+Specifies the directory to which to change before running the program.
+Defaults to "/".
 .\"
 .IP "-p \fIpidfile\fP"
 Causes 
