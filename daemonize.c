@@ -24,6 +24,12 @@
 #include "config.h"
 
 /*---------------------------------------------------------------------------*\
+                                 Constants
+\*---------------------------------------------------------------------------*/
+
+#define VERSION "1.3"
+
+/*---------------------------------------------------------------------------*\
                                   Globals
 \*---------------------------------------------------------------------------*/
 
@@ -62,8 +68,9 @@ static void verbose (const char *format, ...)
 
 static void usage (const char *prog)
 {
-    die ("Usage: %s [-c dir] [-p pidfile] [-u user] [-v] path [arg] ...\n",
-         prog);
+    die ("%s, version %s\nUsage: %s [-c dir] [-p pidfile] [-u user] [-v] "
+         "path [arg] ...\n",
+         prog, VERSION, prog);
 }
 
 static void parseParams (int argc, char **argv)
@@ -93,7 +100,7 @@ static void parseParams (int argc, char **argv)
       Using x_getopt() ensures that daemonize uses its own version, which
       always behaves consistently.
     */
-    while ( (opt = x_getopt (argc, argv, "u:p:v")) != -1)
+    while ( (opt = x_getopt (argc, argv, "c:u:p:v")) != -1)
     {
         switch (opt)
         {
@@ -198,6 +205,11 @@ int main (int argc, char **argv)
     if (user != NULL)
         switchUser (user, pidFile, uid);
 
+    /*
+      Change directory here, as well as after we've daemonized. That way,
+      if the directory isn't accessible, the user will actually see a
+      meaningful error message.
+    */
     if (chdir (cwd) != 0)
     {
 	die ("Can't change working directory to \"%s\": %s\n",
@@ -212,6 +224,12 @@ int main (int argc, char **argv)
     {
         fprintf (fPid, "%d\n", getpid());
         fclose (fPid);
+    }
+
+    if (chdir (cwd) != 0)
+    {
+	die ("Can't change working directory to \"%s\": %s\n",
+             cwd, strerror (errno));
     }
 
     execvp (cmd[0], cmd);
