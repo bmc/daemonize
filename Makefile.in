@@ -22,7 +22,7 @@ daemonize:	    daemonize.o getopt.o $(MISSING_OBJECTS)
 
 install:
 	mkdir -p $(INSTALL_SBIN)
-	$(INSTALL) -o root -m 0700 daemonize $(INSTALL_SBIN)
+	$(INSTALL) -o root -m 0755 daemonize $(INSTALL_SBIN)
 
 clean:
 	rm -f *.o daemonize
