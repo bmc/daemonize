@@ -5,6 +5,8 @@
 .\" file for details.
 .\"
 .\" Copyright (c) 2003 Brian M. Clapper, bmc <at> clapper <dot> org
+.\"
+.\" $Id$
 .\" ---------------------------------------------------------------------------
 .TH daemonize 1 "April 2003" Unix "User Manuals"
 .SH NAME
@@ -100,7 +102,10 @@ will use it. Otherwise,
 .B daemonize
 uses its own version of
 .BR daemon (3).
-(This choice is made at compile time.)
+This choice is made at compile time. (BSD 4.4-derived operating systems
+tend to provide their own
+.BR daemon (3)
+routine.)
 .PP
 FreeBSD 5.0 introduced a
 .BR daemon (1)
