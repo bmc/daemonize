@@ -187,8 +187,7 @@ dnl the "portability" Makefile.
 
 AC_CHECK_FUNC(strerror, AC_DEFINE(HAVE_STRERROR),
 	      LOCAL_MISSING_SOURCES="${LOCAL_MISSING_SOURCES} strerror.c")
-AC_CHECK_FUNC(getopt, AC_DEFINE(HAVE_GETOPT),
-	      LOCAL_MISSING_SOURCES="${LOCAL_MISSING_SOURCES} getopt.c")
+AC_CHECK_FUNC(getopt, AC_DEFINE(HAVE_GETOPT))
 
 dnl daemon(3) is found mostly on BSD 4.4Lite-derived systems.  Linux does not 
 dnl appear to have it; nor does Solaris, HP/UX or AIX. If it's missing, we

@@ -1,0 +1,17 @@
+$Id$
+
+Changes in version 1.1:
+
+- Now uses local getopt.c unconditionally, instead of defaulting to
+  whatever's on the system. This gets around a problem when installing on
+  systems with GNU getopt (e.g., Linux). Unless POSIXLY_CORRECT is set in
+  the environment, GNU getopt scans the entire command line, which means
+  it'll complain about "unknown options" that are specified in the command
+  being passed to daemonize. One solution is to have daemonize set
+  POSIXLY_CORRECT right before calling getopt() (and then restore it before
+  running the program-to-daemonize, in case it might affect that program's
+  behavior). However, it's just simpler to use the old, public domain
+  getopt routine.
+
+- daemonize now verifies that the program actually exists before
+  daemonizing. (It didn't check before.)

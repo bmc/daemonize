@@ -17,8 +17,8 @@ CC		= @CC@
 
 all: daemonize 
 
-daemonize:	    daemonize.o $(MISSING_OBJECTS)
-	$(CC) -o daemonize daemonize.o $(MISSING_OBJECTS)
+daemonize:	    daemonize.o getopt.o $(MISSING_OBJECTS)
+	$(CC) -o daemonize daemonize.o getopt.o $(MISSING_OBJECTS)
 
 install:
 	mkdir -p $(INSTALL_SBIN)

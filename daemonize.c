@@ -159,6 +159,11 @@ int main (int argc, char **argv)
     if (cmd[0][0] != '/')
         die ("The 'path' parameter must be an absolute path name.");
 
+    /* Verify that the path to the command points to an existing file. */
+
+    if (access (cmd[0], F_OK) == -1)
+        die ("File \"%s\" does not exist.\n", cmd[0]);
+
     if (pidFile != NULL)
     {
         verbose ("Opening PID file \"%s\".\n", pidFile);
