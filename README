@@ -1,0 +1,63 @@
+			  daemonize, version 1.0
+
+INTRODUCTION
+
+daemonize is a trivial utility that runs a command as a Unix daemon. 
+See the accompanying man page for full details.
+
+
+INSTALLATION
+
+Normal installation:
+
+	$ sh configure
+	$ make
+	$ su 
+	# make install
+
+For a detailed report of the available "configure" options:
+
+	$ sh configure --help
+
+
+NOTES
+
+1. I have personally compiled and tested daemonize on the following platforms:
+
+   - FreeBSD 4.x
+   - Mandrake Linux 8.1
+   - Red Hat Linux 6.2
+   - Red Hat Linux 8.0
+   - Solaris (SunOS 5.8)
+
+2. The accompanying "configure" script was generated with GNU autoconf
+   version 2.1.3. It should work, as is, for most Unix systems. However,
+   if you want to run autoconf yourself, you must use version 2.1.3.
+   Autoconf version 2.5.x will NOT work!
+
+
+AUTHOR
+
+Brian Clapper, bmc <at> clapper <dot> org
+
+
+WEB PAGE
+
+http://www.clapper.org/software/daemonize
+
+
+LICENSE
+
+With the exception of the "install-sh" script and the "getopt.c" source,
+this software is released under the GNU Public License. See the COPYING
+file for details.
+
+
+COPYRIGHT
+
+With the exception of the "install-sh" script and the "getopt.c" source,
+this software is copyright 2003, Brian M. Clapper
+
+---------------------------------------------------------------------------
+$Id$
+

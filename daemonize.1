@@ -1,0 +1,125 @@
+.\" -*-nroff-*-
+.\"
+.\" With the exception of the "install-sh" script and the "getopt.c" source,
+.\" this software is released under the GNU Public License. See the COPYING
+.\" file for details.
+.\"
+.\" Copyright (c) 2003 Brian M. Clapper, bmc <at> clapper <dot> org
+.\" ---------------------------------------------------------------------------
+.TH daemonize 1 "April 2003" Unix "User Manuals"
+.SH NAME
+.PP
+daemonize \- run a program as a Unix daemon
+.SH SYNOPSIS
+.PP
+.B daemonize
+[-c \fIdirectory\fP]
+[-p \fIpidfile\fP] 
+[-u \fIuser\fP]
+[-v]
+.I "path [arg] ..."
+.SH DESCRIPTION
+.PP
+.B daemonize
+is a trivial utility that runs a command as a Unix daemon. 
+As defined in W. Richard Stevens' 1990 book,
+.I "Unix Network Programming"
+(Addison-Wesley, 1990), a daemon is
+\*(lqa process that executes `in the background' (i.e., without an associated
+terminal or login shell) either waiting for some event to occur, or waiting
+to perform some specified task on a periodic basis.\*(rq Upon startup, a
+typical daemon program will:
+.IP \(bu 2
+Close all open file descriptors (especially standard input, standard
+output and standard error)
+.IP \(bu 2
+Change its working directory to the root filesystem, to ensure that
+it doesn't tie up another filesystem and prevent it from being unmounted
+.IP \(bu 2
+Reset its
+.I umask
+value
+.IP \(bu 2
+Run in the background (i.e.,
+.IR fork )
+.IP \(bu 2
+Disassociate from its process group (usually a shell), to insulate
+itself from signals (such as HUP) sent to the process group
+.IP \(bu 2
+Ignore all terminal I/O signals
+.IP \(bu 2
+Disassociate from the control terminal (and takes steps not to reacquire one)
+.IP \(bu 2
+Handle any
+.SM SIGCLD
+signals
+.PP
+Most programs that are designed to be run as daemons do that work for
+themselves. However, you'll occasionally run across one that does not.
+When you must run a daemon program that does not properly make
+itself into a true Unix daemon, you can use 
+.B daemonize
+to force it to run as a true daemon.
+.SH OPTIONS
+.PP
+.IP "-c \fIdirectory\fP"
+Specifies the directory to 
+.\"
+.IP "-p \fIpidfile\fP"
+Causes 
+.B daemonize
+to write the numeric process ID (PID) of the running daemon to the
+specified file. This option is useful when the program being daemonized
+doesn't create its own PID file.
+.\"
+.IP "-u \fIuser\fP"
+Run the program as the specified user. This option only works if
+.B daemonize
+is invoked by the superuser.
+Note: For obvious reasons, it's very dangerous to install
+.B daemonize
+as a
+.I setuid-to-root
+executable. For that reason, 
+.B daemonize
+will refuse to run if it detects that it has been
+installed that way.
+.\"
+.IP -v
+Cause
+.B daemonize
+to write verbose messages to standard error, telling what it's doing
+as it daemonizes the program.
+.SH NOTES
+.PP
+If the host operating system provides the
+.BR daemon (3)
+library routine, 
+.B daemonize
+will use it. Otherwise,
+.B daemonize
+uses its own version of
+.BR daemon (3).
+(This choice is made at compile time.)
+.PP
+FreeBSD 5.0 introduced a
+.BR daemon (1)
+command that is similar to, but less functional, than
+.BR daemonize .
+.SH NO WARRANTIES
+.PP
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+.SH SEE ALSO
+.PP
+.BR daemon (3),
+.BR setsid (3)
+.PP
+.B daemonize
+Home Page: http://www.clapper.org/software/daemonize/
+.SH AUTHOR
+.PP
+Brian M. Clapper,
+.I "bmc <at> clapper <dot> org"

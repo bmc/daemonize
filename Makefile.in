@@ -1,0 +1,31 @@
+# Makefile.in for daemonize.
+#
+# $Id$
+# ---------------------------------------------------------------------------
+
+srcdir		= @srcdir@
+VPATH		= @srcdir@
+INSTALL_PREFIX	= @prefix@
+INSTALL		= @INSTALL@
+INSTALL_SBIN	= $(INSTALL_PREFIX)/sbin
+MISSING_SOURCES	= @LOCAL_MISSING_SOURCES@
+MISSING_OBJECTS = $(MISSING_SOURCES:.c=.o)
+CC		= @CC@
+
+.c.o:
+	$(CC) -c $< -I.
+
+all: daemonize 
+
+daemonize:	    daemonize.o $(MISSING_OBJECTS)
+	$(CC) -o daemonize daemonize.o $(MISSING_OBJECTS)
+
+install:
+	mkdir -p $(INSTALL_SBIN)
+	$(INSTALL) -o root -m 0700 daemonize $(INSTALL_SBIN)
+
+clean:
+	rm -f *.o daemonize
+
+distclean:	clean
+	rm config.status config.log config.cache config.h Makefile 
