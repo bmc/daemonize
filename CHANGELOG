@@ -1,5 +1,13 @@
 $Id$
 
+Changes in version 1.2:
+
+- The external names in getopt.c are now prefixed with "x_" (e.g.,
+  x_getopt(), x_opterr, etc.). The function's name has been changed to
+  avoid type conflicts with the native getopt() on the host operating
+  system. (This is known to happen on Solaris 8, for instance.)
+
+
 Changes in version 1.1:
 
 - Now uses local getopt.c unconditionally, instead of defaulting to
