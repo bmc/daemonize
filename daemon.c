@@ -98,6 +98,10 @@ int daemon (int nochdir, int noclose)
 
     else
     {
+        /* clear any inherited umask(2) value */
+
+        umask (0);
+
         /* We're there. */
 
         if (! nochdir)
