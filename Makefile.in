@@ -28,4 +28,4 @@ clean:
 	rm -f *.o daemonize
 
 distclean:	clean
-	rm config.status config.log config.cache config.h Makefile 
+	rm -f config.status config.log config.cache config.h Makefile 

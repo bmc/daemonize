@@ -72,16 +72,37 @@ static void parseParams (int argc, char **argv)
     int  argsLeft;
 
     opterr = 0;
-    while ( (opt = getopt (argc, argv, "u:p:v")) != -1)
+
+    /*
+      NOTE: x_getopt() is the old public domain getopt(). The source lives
+      in "getopt.c". The function's name has been changed to avoid
+      conflicts with the native getopt() on the host operating system. So
+      far, I've seen two kinds of conflicts:
+
+      1. GNU getopt() (e.g., on Linux systems) behaves differently from the
+         old getopt(), unless POSIXLY_CORRECT is defined in the
+         environment. Specifically, it insists on processing options even
+         after the first non-option argument has been seen on the command
+         line. Initially, I got around this problem by forcing the use of
+         the included public domain getopt() function.
+
+      2. The types used in the included public domain getopt() conflict with
+         the types of the native getopt() on some operating systems (e.g.,
+         Solaris 8).
+
+      Using x_getopt() ensures that daemonize uses its own version, which
+      always behaves consistently.
+    */
+    while ( (opt = x_getopt (argc, argv, "u:p:v")) != -1)
     {
         switch (opt)
         {
             case 'c':
-                cwd = optarg;
+                cwd = x_optarg;
                 break;
 
             case 'p':
-                pidFile = optarg;
+                pidFile = x_optarg;
                 break;
 
             case 'v':
@@ -89,20 +110,20 @@ static void parseParams (int argc, char **argv)
                 break;
 
             case 'u':
-                user = optarg;
+                user = x_optarg;
                 break;
 
             default:
-                fprintf (stderr, "Bad option: -%c\n", optopt);
+                fprintf (stderr, "Bad option: -%c\n", x_optopt);
                 usage (argv[0]);
         }
     }
 
-    argsLeft = argc - optind;
+    argsLeft = argc - x_optind;
     if (argsLeft < 1)
         usage (argv[0]);
 
-    cmd  = &argv[optind];
+    cmd  = &argv[x_optind];
     return;
 }
 

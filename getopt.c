@@ -34,13 +34,19 @@
  * has no official existence, and my source at AT&T did not send a copy.
  * The current SVR2 man page reflects the actual behavor of this getopt.
  * However, I am not about to post a copy of anything licensed by AT&T.
+ *
+ * ----
+ * NOTE: To avoid conflicts with existing system getopt routines, I've
+ * changed the names of the function and external variables from getopt(),
+ * optind, etc., to x_getopt(), x_optind, etc.
+ *
  */
 
 #include <stdio.h>
 /* We're ANSI now; we're guaranteed to have strchr(). */
 #include <string.h>
 
-#define ERR(s, c)	if(opterr){\
+#define ERR(s, c)	if(x_opterr){\
 	extern int write();\
 	char errbuf[2];\
 	errbuf[0] = c; errbuf[1] = '\n';\
@@ -48,51 +54,51 @@
 	(void) write(2, s, (unsigned)strlen(s));\
 	(void) write(2, errbuf, 2);}
 
-int	opterr = 1;
-int	optind = 1;
-int	optopt;
-char	*optarg;
+int	x_opterr = 1;
+int	x_optind = 1;
+int	x_optopt;
+char	*x_optarg;
 
 int
-getopt(int argc, char **argv, const char *opts)
+x_getopt(int argc, char **argv, const char *opts)
 {
 	static int sp = 1;
 	register int c;
 	register char *cp;
 
 	if(sp == 1)
-		if(optind >= argc ||
-		   argv[optind][0] != '-' || argv[optind][1] == '\0')
+		if(x_optind >= argc ||
+		   argv[x_optind][0] != '-' || argv[x_optind][1] == '\0')
 			return(EOF);
-		else if(strcmp(argv[optind], "--") == 0) {
-			optind++;
+		else if(strcmp(argv[x_optind], "--") == 0) {
+			x_optind++;
 			return(EOF);
 		}
-	optopt = c = argv[optind][sp];
+	x_optopt = c = argv[x_optind][sp];
 	if(c == ':' || (cp=strchr(opts, c)) == NULL) {
 		ERR(": illegal option -- ", c);
-		if(argv[optind][++sp] == '\0') {
-			optind++;
+		if(argv[x_optind][++sp] == '\0') {
+			x_optind++;
 			sp = 1;
 		}
 		return('?');
 	}
 	if(*++cp == ':') {
-		if(argv[optind][sp+1] != '\0')
-			optarg = &argv[optind++][sp+1];
-		else if(++optind >= argc) {
+		if(argv[x_optind][sp+1] != '\0')
+			x_optarg = &argv[x_optind++][sp+1];
+		else if(++x_optind >= argc) {
 			ERR(": option requires an argument -- ", c);
 			sp = 1;
 			return('?');
 		} else
-			optarg = argv[optind++];
+			x_optarg = argv[x_optind++];
 		sp = 1;
 	} else {
-		if(argv[optind][++sp] == '\0') {
+		if(argv[x_optind][++sp] == '\0') {
 			sp = 1;
-			optind++;
+			x_optind++;
 		}
-		optarg = NULL;
+		x_optarg = NULL;
 	}
 	return(c);
 }
