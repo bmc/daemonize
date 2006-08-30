@@ -92,9 +92,9 @@ static void usage (const char *prog)
 "-u <user>    Run daemon as user <user>. Requires invocation as root.",
 "-v           Issue verbose messages to stdout while daemonizing"
     };
+    int i;
 
     prog = basename (prog);
-    int i;
     fprintf (stderr, "%s, version %s\n", prog, VERSION);
     for (i = 0; i < sizeof (USAGE) / sizeof (const char *); i++)
     {
