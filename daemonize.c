@@ -75,7 +75,7 @@ static void verbose (const char *format, ...)
     }
 }
 
-static void usage (const char *prog)
+static void usage (char *prog)
 {
     static const char *USAGE[] = 
     {
