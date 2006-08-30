@@ -1,8 +1,20 @@
 /*---------------------------------------------------------------------------*\
-  Replacement for standard C strerror() function, in case it's missing.
-  Not thread-safe.
-
   $Id$
+
+  NAME
+        strerror - get string representation of errno value
+
+  DESCRIPTION
+
+        Replacement for standard C strerror() function, in case it's missing.
+        Not thread-safe.
+
+  LICENSE
+
+	This source code is released under the GNU Public License. See the
+        COPYING file for details.
+
+  Copyright (c) 2003-2006 Brian M. Clapper, bmc <at> clapper <dot> org
 \*---------------------------------------------------------------------------*/
 
 #define MAX_INT_DIGITS  (11)		/* max. digits in a LONG (w/ sign) */

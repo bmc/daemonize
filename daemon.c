@@ -6,7 +6,7 @@
 
   DESCRIPTION
 
-        This source file contains a version of BSD-style daemon(3)
+        This source file contains a version of a BSD-style daemon(3)
         function, a function to "daemonize" the calling process.  This
         implementation is based both on the generic daemon logic defined in
         the Unix Programmer's FAQ and on the daemon_start() function in
@@ -20,7 +20,7 @@
 	This source code is released under the GNU Public License. See the
         COPYING file for details.
 
-  Copyright (c) 2003 Brian M. Clapper, bmc <at> clapper <dot> org
+  Copyright (c) 2003-2006 Brian M. Clapper, bmc <at> clapper <dot> org
 \*---------------------------------------------------------------------------*/
 
 /*---------------------------------------------------------------------------*\
