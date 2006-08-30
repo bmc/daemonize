@@ -1,5 +1,13 @@
 $Id$
 
+Changes in version 1.5:
+
+- daemonize can now optionally redirect the daemon's standard output and
+  standard error to files
+
+- configure now supports a local basename() emulator.
+
+
 Changes in version 1.4:
 
 - Version of daemon(3) shipped with daemonize attempted to redirect

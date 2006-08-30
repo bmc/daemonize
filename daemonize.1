@@ -4,18 +4,25 @@
 .\" this software is released under the GNU Public License. See the COPYING
 .\" file for details.
 .\"
-.\" Copyright (c) 2003 Brian M. Clapper, bmc <at> clapper <dot> org
+.\" Copyright (c) 2003-2006 Brian M. Clapper, bmc <at> clapper <dot> org
 .\"
 .\" $Id$
 .\" ---------------------------------------------------------------------------
-.TH daemonize 1 "April 2003" Unix "User Manuals"
+.\"
+.ie n .ds Bu o
+.el   .ds Bu \(bu
+.\"
+.TH daemonize 1 "August 2006" Unix "User Manuals"
 .SH NAME
 .PP
 daemonize \- run a program as a Unix daemon
 .SH SYNOPSIS
 .PP
 .B daemonize
+[-a]
 [-c \fIdirectory\fP]
+[-e \fIstderr\fP]
+[-o \fIstdout\fP]
 [-p \fIpidfile\fP] 
 [-u \fIuser\fP]
 [-v]
@@ -23,7 +30,7 @@ daemonize \- run a program as a Unix daemon
 .SH DESCRIPTION
 .PP
 .B daemonize
-is a trivial utility that runs a command as a Unix daemon. 
+runs a command as a Unix daemon. 
 As defined in W. Richard Stevens' 1990 book,
 .I "Unix Network Programming"
 (Addison-Wesley, 1990), a daemon is
@@ -31,27 +38,27 @@ As defined in W. Richard Stevens' 1990 book,
 terminal or login shell) either waiting for some event to occur, or waiting
 to perform some specified task on a periodic basis.\*(rq Upon startup, a
 typical daemon program will:
-.IP \(bu 2
+.IP \*(Bu 2
 Close all open file descriptors (especially standard input, standard
 output and standard error)
-.IP \(bu 2
+.IP \*(Bu 2
 Change its working directory to the root filesystem, to ensure that
 it doesn't tie up another filesystem and prevent it from being unmounted
-.IP \(bu 2
+.IP \*(Bu 2
 Reset its
 .I umask
 value
-.IP \(bu 2
+.IP \*(Bu 2
 Run in the background (i.e.,
 .IR fork )
-.IP \(bu 2
+.IP \*(Bu 2
 Disassociate from its process group (usually a shell), to insulate
 itself from signals (such as HUP) sent to the process group
-.IP \(bu 2
+.IP \*(Bu 2
 Ignore all terminal I/O signals
-.IP \(bu 2
+.IP \*(Bu 2
 Disassociate from the control terminal (and take steps not to reacquire one)
-.IP \(bu 2
+.IP \*(Bu 2
 Handle any
 .SM SIGCLD
 signals
@@ -64,9 +71,42 @@ itself into a true Unix daemon, you can use
 to force it to run as a true daemon.
 .SH OPTIONS
 .PP
+.IP -a
+Append to the output files, rather than overwriting them (which is the
+default). Only applicable if
+.I -e
+and/or
+.I -o
+are specified.
+.\"
 .IP "-c \fIdirectory\fP"
 Specifies the directory to which to change before running the program.
-Defaults to "/".
+Defaults to "/". The choice for this option is important. The file system
+containing the daemon's working directory cannot be unmounted while the
+daemon is running. That's why most daemons are careful to use a working
+directory on the root file system.
+.\"
+.IP "-e \fIstderr\fP"
+Redirect standard error to the specified file, instead of "/dev/null".
+.sp
+.B Warning:
+Be careful where you redirect the output! The file system containing the
+open file cannot be unmounted as long as the file is open. For best
+results, make sure that this output file is on the same file system as
+the daemon's working directory. (See the
+.I -c
+option.)
+.\"
+.IP "-o \fIstdout\fP"
+Redirect standard output to the specified file, instead of "/dev/null".
+.sp
+.B Warning:
+Be careful where you redirect the output! The file system containing the
+open file cannot be unmounted as long as the file is open. For best
+results, make sure that this output file is on the same file system as
+the daemon's working directory. (See the
+.I -c
+option.)
 .\"
 .IP "-p \fIpidfile\fP"
 Causes 
@@ -129,3 +169,13 @@ Home Page: http://www.clapper.org/software/daemonize/
 .PP
 Brian M. Clapper,
 .I "bmc <at> clapper <dot> org"
+.SH CONTRIBUTORS
+.PP
+Support for the
+.I -e
+and
+.I -o
+options is based on a patch submitted by
+Tim Starling
+.I "(tstarling <at> wikimedia <dot> org)."
+

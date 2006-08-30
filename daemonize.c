@@ -13,31 +13,40 @@
 	This source code is released under the GNU Public License. See the
         COPYING file for details.
 
-  Copyright (c) 2003 Brian M. Clapper, bmc <at> clapper <dot> org
+  Copyright (c) 2003-2006 Brian M. Clapper, bmc <at> clapper <dot> org
 \*---------------------------------------------------------------------------*/
 
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include <unistd.h>
 #include <sys/types.h>
 #include <pwd.h>
 #include <stdarg.h>
+#include <fcntl.h>
 #include "config.h"
 
 /*---------------------------------------------------------------------------*\
                                  Constants
 \*---------------------------------------------------------------------------*/
 
-#define VERSION "1.4"
+#define VERSION "1.5"
 
 /*---------------------------------------------------------------------------*\
                                   Globals
 \*---------------------------------------------------------------------------*/
 
 static const char  *pidFile   = NULL;
+static const char  *outFile   = NULL;
+static const char  *errFile   = NULL;
 static bool         beVerbose = FALSE;
 static const char  *user      = NULL;
 static char       **cmd       = NULL;
 static const char  *cwd       = "/";
+static int          nullFd    = -1;
+static int          outFd     = -1;
+static int          errFd     = -1;
+static int          append    = 0;
 
 /*---------------------------------------------------------------------------*\
                              Private Functions
@@ -68,9 +77,32 @@ static void verbose (const char *format, ...)
 
 static void usage (const char *prog)
 {
-    die ("%s, version %s\nUsage: %s [-c dir] [-p pidfile] [-u user] [-v] "
-         "path [arg] ...\n",
-         prog, VERSION, prog);
+    static const char *USAGE[] = 
+    {
+"Usage: %s [OPTIONS] path [arg] ...",
+"",
+"OPTIONS",
+"",
+"-a           Append to, instead of overwriting, output files. Ignored ",
+"             unless -e and/or -o are specified.",
+"-c <dir>     Set daemon's working directory to <dir>.",
+"-e <stderr>  Send daemon's stderr to file <stderr>, instead of /dev/null.",
+"-o <stdout>  Send daemon's stderr to file <stdout>, instead of /dev/null.",
+"-p <pidfile> Save PID to <pidfile>.",
+"-u <user>    Run daemon as user <user>. Requires invocation as root.",
+"-v           Issue verbose messages to stdout while daemonizing"
+    };
+
+    prog = basename (prog);
+    int i;
+    fprintf (stderr, "%s, version %s\n", prog, VERSION);
+    for (i = 0; i < sizeof (USAGE) / sizeof (const char *); i++)
+    {
+        fprintf (stderr, USAGE[i], prog);
+        fputc ('\n', stderr);
+    }
+
+    exit (1);
 }
 
 static void parseParams (int argc, char **argv)
@@ -100,10 +132,14 @@ static void parseParams (int argc, char **argv)
       Using x_getopt() ensures that daemonize uses its own version, which
       always behaves consistently.
     */
-    while ( (opt = x_getopt (argc, argv, "c:u:p:v")) != -1)
+    while ( (opt = x_getopt (argc, argv, "ac:u:p:vo:e:")) != -1)
     {
         switch (opt)
         {
+            case 'a':
+                append = 1;
+                break;
+
             case 'c':
                 cwd = x_optarg;
                 break;
@@ -119,6 +155,15 @@ static void parseParams (int argc, char **argv)
             case 'u':
                 user = x_optarg;
                 break;
+
+            case 'o':
+                outFile = x_optarg;
+                break;
+
+            case 'e':
+                errFile = x_optarg;
+                break;
+	
 
             default:
                 fprintf (stderr, "Bad option: -%c\n", x_optopt);
@@ -170,14 +215,99 @@ static void switchUser (const char *userName,
 	die ("Can't set euid to %d: %s\n", pw->pw_uid, strerror (errno));
 }
 
+static int open_output_file (const char *path)
+{
+    int flags = O_CREAT | O_WRONLY;
+
+    if (append)
+    {
+        verbose ("Appending to %s\n", path);
+        flags |= O_APPEND;
+    }
+
+    else
+    {
+        verbose ("Overwriting %s\n", path);
+        flags |= O_TRUNC;
+    }
+
+    return open (path, flags, 0666);
+}
+
+static void open_output_files()
+{
+    /* open files for stdout/stderr */
+
+    if ((outFile != NULL) || (errFile != NULL))
+    {
+        if ((nullFd = open ("/dev/null", O_WRONLY)) == -1)
+            die ("Can't open /dev/null: %s\n", strerror (errno));
+
+        close (STDIN_FILENO);
+        dup2 (nullFd, STDIN_FILENO);
+
+        if (outFile != NULL)
+        {
+            if ((outFd = open_output_file (outFile)) == -1)
+            {
+                die ("Can't open \"%s\" for stdout: %s\n", 
+                     outFile, strerror (errno));
+            }
+        }
+
+        else 
+        {
+            outFd = nullFd;
+        }
+
+        if (errFile != NULL)
+        {
+            if ((outFile != NULL) && (strcmp (errFile, outFile) == 0))
+                errFd = outFd;
+
+            else if ((errFd = open_output_file (errFile)) == -1)
+            {
+                die ("Can't open \"%s\" for stderr: %s\n", 
+                     errFile, strerror (errno));
+            }
+        }
+
+        else
+        {
+            errFd = nullFd;
+        }
+    }
+}
+
+static int redirect_stdout_stderr()
+{
+    int rc = 0;
+
+    /* Redirect stderr/stdout */
+
+    if ((outFile != NULL) || (errFile != NULL))
+    {
+        close (STDIN_FILENO);
+        close (STDOUT_FILENO);
+        close (STDERR_FILENO);
+        dup2 (nullFd, STDIN_FILENO);
+        dup2 (outFd, STDOUT_FILENO);
+        dup2 (errFd, STDERR_FILENO);
+        rc = 1;
+    }
+
+    return rc;
+}
+
 /*---------------------------------------------------------------------------*\
                                Main Program
 \*---------------------------------------------------------------------------*/
 
 int main (int argc, char **argv)
 {
-    uid_t   uid = getuid();
-    FILE   *fPid = NULL;
+    uid_t  uid = getuid();
+    FILE  *fPid = NULL;
+    int    noclose = 0;
 
     if (geteuid() != uid)
         die ("This executable is too dangerous to be setuid.\n");
@@ -202,6 +332,8 @@ int main (int argc, char **argv)
         }
     }
 
+    open_output_files();
+
     if (user != NULL)
         switchUser (user, pidFile, uid);
 
@@ -212,7 +344,11 @@ int main (int argc, char **argv)
     }
 
     verbose ("Daemonizing...");
-    if (daemon (1, 0) != 0)
+
+    if (redirect_stdout_stderr())
+        noclose = 1;
+
+    if (daemon (1, noclose) != 0)
         die ("Can't daemonize: %s\n", strerror (errno));
 
     if (fPid != NULL)
@@ -231,3 +367,6 @@ int main (int argc, char **argv)
 
     die ("Can't exec \"%s\": %s\n", cmd[0], strerror (errno));
 }
+
+/*  vim: set et sw=4 sts=4 : */
+
