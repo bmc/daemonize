@@ -17,15 +17,26 @@ CC		= @CC@
 
 all: daemonize 
 
-daemonize:	    daemonize.o getopt.o $(MISSING_OBJECTS)
+daemonize: daemonize.o getopt.o $(MISSING_OBJECTS)
 	$(CC) -o daemonize daemonize.o getopt.o $(MISSING_OBJECTS)
+
+testdaemon: testdaemon.o
+	$(CC) -o testdaemon testdaemon.o
+ 
+psman: daemonize.ps
+
+daemonize.ps: daemonize.1
+	groff -man daemonize.1 >pstmp
+	ps2ps pstmp daemonize.ps
+	rm pstmp
 
 install:
 	mkdir -p $(INSTALL_SBIN)
 	$(INSTALL) -o root -m 0755 daemonize $(INSTALL_SBIN)
 
 clean:
-	rm -f *.o daemonize
+	rm -rf *.o daemonize testdaemon *.ps
 
 distclean:	clean
-	rm -f config.status config.log config.cache config.h Makefile 
+	rm -f config.status config.log config.cache config.h Makefile autom?te.cache
+

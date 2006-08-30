@@ -94,6 +94,12 @@
 /* Define if you have the daemon() function. */
 #undef HAVE_DAEMON
 
+/* Define if you have the basename() function. */
+#undef HAVE_BASENAME
+
+/* Define if you have <libgen.h> */
+#undef HAVE_LIBGEN_H
+
 /* Define if you have the strerror() function. */
 #undef HAVE_STRERROR
 
@@ -214,6 +220,14 @@ extern int errno;
 #endif
 #ifndef WIFEXITED
 # define WIFEXITED(stat_val) (((stat_val) & 255) == 0)
+#endif
+
+#ifndef HAVE_BASENAME
+extern char *basename (char *path);
+#endif
+
+#ifdef HAVE_LIBGEN_H
+#include <libgen.h>
 #endif
 
 #endif /* _CONFIG_H_ */

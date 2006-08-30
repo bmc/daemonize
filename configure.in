@@ -44,6 +44,7 @@ dnl ---------------------------------------------------------------------------
 AC_HEADER_STDC
 AC_HEADER_SYS_WAIT
 AC_CHECK_HEADERS(errno.h)
+AC_CHECK_HEADERS(libgen.h)
 
 export CPPFLAGS
 
@@ -188,12 +189,14 @@ dnl the "portability" Makefile.
 AC_CHECK_FUNC(strerror, AC_DEFINE(HAVE_STRERROR),
 	      LOCAL_MISSING_SOURCES="${LOCAL_MISSING_SOURCES} strerror.c")
 
-dnl daemon(3) is found mostly on BSD 4.4Lite-derived systems.  Linux does not 
-dnl appear to have it; nor does Solaris, HP/UX or AIX. If it's missing, we
+dnl Some Unices don't have a daemon(3) function. If it's missing, we
 dnl supply our own emulation version.
 
 AC_CHECK_FUNC(daemon, AC_DEFINE(HAVE_DAEMON),
 	      LOCAL_MISSING_SOURCES="${LOCAL_MISSING_SOURCES} daemon.c")
+
+AC_CHECK_FUNC(basename, AC_DEFINE(HAVE_BASENAME),
+	      LOCAL_MISSING_SOURCES="${LOCAL_MISSING_SOURCES} basename.c")
 
 AC_SUBST(LOCAL_MISSING_SOURCES)
 
