@@ -33,9 +33,7 @@ NOTES
    - Fedora Core 5
 
 2. The accompanying "configure" script was generated with GNU autoconf
-   version 2.1.3. It should work, as is, for most Unix systems. However,
-   if you want to run autoconf yourself, you must use version 2.1.3.
-   Autoconf version 2.5.x will NOT work!
+   version 2.1.3. It should work, as is, for most Unix systems.
 
 
 AUTHOR
