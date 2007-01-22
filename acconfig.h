@@ -1,8 +1,10 @@
-
 /*---------------------------------------------------------------------------*\
   Site-specific configuration file for run-as utility
 
   Input to `autoheader': $Id$
+
+  This source code is released under a BSD-style license. See the LICENSE
+  file for details.
 \*---------------------------------------------------------------------------*/
 
 #ifndef _CONFIG_H_

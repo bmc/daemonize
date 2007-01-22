@@ -49,7 +49,7 @@ http://www.clapper.org/software/daemonize
 LICENSE
 
 With the exception of the "install-sh" script and the "getopt.c" source,
-this software is released under the GNU Public License. See the COPYING
+this software is released under the BSD-style license. See the LICENSE
 file for details.
 
 

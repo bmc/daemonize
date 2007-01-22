@@ -10,10 +10,10 @@
 
   LICENSE
 
-	This source code is released under the GNU Public License. See the
-        COPYING file for details.
+	This source code is released under a BSD-style license. See the
+        LICENSE file for details.
 
-  Copyright (c) 2006 Brian M. Clapper, bmc <at> clapper <dot> org
+  Copyright (c) 2006-2007 Brian M. Clapper, bmc <at> clapper <dot> org
 \*---------------------------------------------------------------------------*/
 
 /*---------------------------------------------------------------------------*\
