@@ -1,5 +1,10 @@
 $Id$
 
+Changes in version 1.5.1:
+
+- Now released under BSD-style license, not GNU Public License.
+
+
 Changes in version 1.5:
 
 - daemonize can now optionally redirect the daemon's standard output and
