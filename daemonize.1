@@ -24,6 +24,7 @@ daemonize \- run a program as a Unix daemon
 [-e \fIstderr\fP]
 [-o \fIstdout\fP]
 [-p \fIpidfile\fP] 
+[-l \fIlockfile\fP]
 [-u \fIuser\fP]
 [-v]
 .I "path [arg] ..."
@@ -114,6 +115,28 @@ Causes
 to write the numeric process ID (PID) of the running daemon to the
 specified file. This option is useful when the program being daemonized
 doesn't create its own PID file.
+.IP "-l \fIlockfile\fP"
+Single-instance checking. Causes
+.B daemonize
+to ensure that no more than one instance of the daemon is running by
+placing an exclusive lock on given lockfile. If another process already has
+a lock on the lockfile,
+.I daemonize
+exits.
+.PP
+It 
+.I is 
+possible to use the
+.I pidfile
+as the lock file (e.g., "-p /var/run/foo -l /var/run/foo"),
+though typical daemons use separate files.
+.PP
+NOTE: If the executed program decides to close all file descriptors, 
+the single-instance locking will not work, since the lock depends on an
+open file descriptor. (The operating system kernel removes the lock once
+the process holding the lock closes the file or exits.)
+Normal processes that do not daemonize themselves do not
+usually close all file descriptors.
 .\"
 .IP "-u \fIuser\fP"
 Run the program as the specified user. This option only works if
@@ -160,7 +183,8 @@ visit "http://www.clapper.org/software/daemonize/LICENSE".
 .SH SEE ALSO
 .PP
 .BR daemon (3),
-.BR setsid (2)
+.BR setsid (2),
+.BR flock(2)
 .PP
 .B daemonize
 Home Page: http://www.clapper.org/software/daemonize/

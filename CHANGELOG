@@ -1,5 +1,16 @@
 $Id$
 
+Changes in version 1.5.2:
+
+Two changes suggested and supplied by Yakov Lerner <iler.ml <at> gmail.com>:
+
+- Added a "-l lockfile" option, permitting daemonize to use a lockfile to
+  ensure that only one instance of the daemon runs at a time.
+
+- Now makes additional checks to ensure that the program specified to
+  daemonize is a regular file, not a directory.
+
+
 Changes in version 1.5.1:
 
 - Now released under BSD-style license, not GNU Public License.

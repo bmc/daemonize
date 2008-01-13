@@ -2,15 +2,15 @@
   $Id$
 
   NAME
-	daemonize - run a command as a Unix daemon
+        daemonize - run a command as a Unix daemon
 
   DESCRIPTION
 
-	See accompanying man page for full details
+        See accompanying man page for full details.
 
   LICENSE
 
-	This source code is released under a BSD-style license. See the
+        This source code is released under a BSD-style license. See the
         LICENSE file for details.
 
   Copyright (c) 2003-2007 Brian M. Clapper, bmc <at> clapper <dot> org
@@ -24,13 +24,15 @@
 #include <pwd.h>
 #include <stdarg.h>
 #include <fcntl.h>
+#include <sys/stat.h>
+#include <sys/file.h>
 #include "config.h"
 
 /*---------------------------------------------------------------------------*\
                                  Constants
 \*---------------------------------------------------------------------------*/
 
-#define VERSION "1.5.1"
+#define VERSION "1.5.2"
 
 /*---------------------------------------------------------------------------*\
                                   Globals
@@ -39,6 +41,7 @@
 static const char  *pidFile   = NULL;
 static const char  *outFile   = NULL;
 static const char  *errFile   = NULL;
+static const char  *lockFile  = NULL;
 static bool         beVerbose = FALSE;
 static const char  *user      = NULL;
 static char       **cmd       = NULL;
@@ -90,6 +93,7 @@ static void usage (char *prog)
 "-o <stdout>  Send daemon's stderr to file <stdout>, instead of /dev/null.",
 "-p <pidfile> Save PID to <pidfile>.",
 "-u <user>    Run daemon as user <user>. Requires invocation as root.",
+"-l <lockfile> Single-instance checking using lockfile <lockfile>.",
 "-v           Issue verbose messages to stdout while daemonizing"
     };
     int i;
@@ -132,7 +136,7 @@ static void parseParams (int argc, char **argv)
       Using x_getopt() ensures that daemonize uses its own version, which
       always behaves consistently.
     */
-    while ( (opt = x_getopt (argc, argv, "ac:u:p:vo:e:")) != -1)
+    while ( (opt = x_getopt (argc, argv, "ac:u:p:vo:e:l:")) != -1)
     {
         switch (opt)
         {
@@ -163,7 +167,11 @@ static void parseParams (int argc, char **argv)
             case 'e':
                 errFile = x_optarg;
                 break;
-	
+
+            case 'l':
+                lockFile = x_optarg;
+                break;
+
 
             default:
                 fprintf (stderr, "Bad option: -%c\n", x_optopt);
@@ -189,7 +197,7 @@ static void switchUser (const char *userName,
         die ("Must be root to specify a different user.\n");
 
     if ( (pw = getpwnam (userName)) == NULL )
-	die ("Can't find user \"%s\" in password file.\n", userName);
+        die ("Can't find user \"%s\" in password file.\n", userName);
 
     if (pidFile != NULL)
     {
@@ -203,16 +211,16 @@ static void switchUser (const char *userName,
     }
 
     if (setgid (pw->pw_gid) != 0)
-	die ("Can't set gid to %d: %s\n", pw->pw_gid, strerror (errno));
+        die ("Can't set gid to %d: %s\n", pw->pw_gid, strerror (errno));
 
     if (setegid (pw->pw_gid) != 0)
-	die ("Can't set egid to %d: %s\n", pw->pw_gid, strerror (errno));
+        die ("Can't set egid to %d: %s\n", pw->pw_gid, strerror (errno));
 
     if (setuid (pw->pw_uid) != 0)
-	die ("Can't set uid to %d: %s\n", pw->pw_uid, strerror (errno));
+        die ("Can't set uid to %d: %s\n", pw->pw_uid, strerror (errno));
 
     if (seteuid (pw->pw_uid) != 0)
-	die ("Can't set euid to %d: %s\n", pw->pw_uid, strerror (errno));
+        die ("Can't set euid to %d: %s\n", pw->pw_uid, strerror (errno));
 }
 
 static int open_output_file (const char *path)
@@ -308,6 +316,8 @@ int main (int argc, char **argv)
     uid_t  uid = getuid();
     FILE  *fPid = NULL;
     int    noclose = 0;
+    int    lockFD;
+    struct stat st;
 
     if (geteuid() != uid)
         die ("This executable is too dangerous to be setuid.\n");
@@ -315,12 +325,33 @@ int main (int argc, char **argv)
     parseParams (argc, argv);
 
     if (cmd[0][0] != '/')
-        die ("The 'path' parameter must be an absolute path name.");
+        die ("The 'path' parameter must be an absolute path name.\n");
 
     /* Verify that the path to the command points to an existing file. */
 
-    if (access (cmd[0], F_OK) == -1)
+    if (access (cmd[0], X_OK) == -1)
+        die ("File \"%s\" is not executable.\n", cmd[0]);
+
+    /*
+      Note: A directory will also pass the X_OK test, so test further with
+      stat().
+    */
+    if (stat(cmd[0], &st))
         die ("File \"%s\" does not exist.\n", cmd[0]);
+
+    if(! S_ISREG(st.st_mode))
+        die ("File \"%s\" is not regular file.\n", cmd[0]);
+
+    if (lockFile)
+    {
+        lockFD = open ( lockFile, O_CREAT | O_WRONLY, S_IRUSR | S_IWUSR);
+        if (lockFD < 0)
+            die ("Can't create lock file \"%s\": %s\n",
+                 lockFile, strerror (errno));
+        if (flock(lockFD, LOCK_EX | LOCK_NB) != 0)
+            die ("Can't lock the lock file \"%s\". Is another instance running?\n",
+                lockFile);
+    }
 
     if (pidFile != NULL)
     {
@@ -339,7 +370,7 @@ int main (int argc, char **argv)
 
     if (chdir (cwd) != 0)
     {
-	die ("Can't change working directory to \"%s\": %s\n",
+        die ("Can't change working directory to \"%s\": %s\n",
              cwd, strerror (errno));
     }
 
@@ -359,7 +390,7 @@ int main (int argc, char **argv)
 
     if (chdir (cwd) != 0)
     {
-	die ("Can't change working directory to \"%s\": %s\n",
+        die ("Can't change working directory to \"%s\": %s\n",
              cwd, strerror (errno));
     }
 
