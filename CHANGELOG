@@ -1,5 +1,12 @@
 $Id$
 
+Changes in version 1.5.3:
+
+- Minor licensing change. (configure.in still emitted a message indicated
+  that daemonize is GPL-licensed. It's BSD-licensed.)
+- Updated copyright information.
+
+
 Changes in version 1.5.2:
 
 Two changes suggested and supplied by Yakov Lerner <iler.ml <at> gmail.com>:

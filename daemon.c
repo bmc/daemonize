@@ -1,6 +1,4 @@
 /*---------------------------------------------------------------------------*\
-  $Id$
-
   NAME
 	daemon.c - replacement daemon(3) function
 
@@ -20,7 +18,7 @@
 	This source code is released under a BSD-style. See the LICENSE
         file for details.
 
-  Copyright (c) 2003-2007 Brian M. Clapper, bmc <at> clapper <dot> org
+  Copyright (c) 2003-2009 Brian M. Clapper, bmc <at> clapper <dot> org
 \*---------------------------------------------------------------------------*/
 
 /*---------------------------------------------------------------------------*\

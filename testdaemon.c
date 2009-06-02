@@ -1,6 +1,4 @@
 /*---------------------------------------------------------------------------*\
-  $Id$
-
   NAME
 	testdaemon - simple test daemon
 
@@ -13,7 +11,7 @@
 	This source code is released under a BSD-style license. See the
         LICENSE file for details.
 
-  Copyright (c) 2003-2007 Brian M. Clapper, bmc <at> clapper <dot> org
+  Copyright (c) 2003-2009 Brian M. Clapper, bmc <at> clapper <dot> org
 \*---------------------------------------------------------------------------*/
 
 #include <stdio.h>
