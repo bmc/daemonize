@@ -1,4 +1,15 @@
-$Id$
+Changes in version 1.5.4:
+
+- If a user name is specified via the -u option, the output files specified
+  by the -o and -e options are now opened *after* daemonize switches users,
+  not before (as happened in previous versions). This change ensures that
+  the output files end up being owned by that user, not by root. This
+  change has no effect if -u is not used.
+
+- Rearranged and simplified some of the code in daemonize.c
+
+- Added some documentation to the code.
+
 
 Changes in version 1.5.3:
 
