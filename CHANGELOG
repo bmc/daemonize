@@ -1,3 +1,12 @@
+Changes in version 1.5.5:
+
+- Changes in 1.5.4 made it impossible to create PID files in directories
+  not owned by the user specified with -u. Prior to 1.5.4, doing so was
+  possible. It is now possible again, and the functionality has been
+  corrected slightly to ensure that the proper PID is written and that the
+  PID file has mode 0644.
+
+
 Changes in version 1.5.4:
 
 - If a user name is specified via the -u option, the output files specified

@@ -32,7 +32,7 @@
                                  Constants
 \*---------------------------------------------------------------------------*/
 
-#define VERSION "1.5.4"
+#define VERSION "1.5.5"
 
 /*---------------------------------------------------------------------------*\
                                   Globals
@@ -227,8 +227,10 @@ static void parse_params(int argc, char **argv)
  * Parameters:
  *     user_name - name of user to which to switch
  *     uid       - current process user ID
+ *     pid_file  - if non-NULL, specifies PID file path, ownership of which
+ *                 should be changed to the user
  */
-static void switch_user(const char *user_name, uid_t uid)
+static void switch_user(const char *user_name, uid_t uid, const char *pid_file)
 {
     struct  passwd *pw;
 
@@ -240,6 +242,18 @@ static void switch_user(const char *user_name, uid_t uid)
 
     if (setgid(pw->pw_gid) != 0)
         die("Can't set gid to %d: %s\n", pw->pw_gid, strerror (errno));
+
+    if (pid_file != NULL)
+    {
+        verbose ("Changing ownership of PID file to \"%s\" (%d)\n",
+                 user, pw->pw_uid);
+        if (chown (pid_file, pw->pw_uid, pw->pw_gid) == -1)
+        {
+            die ("Can't change ownership of PID file \"%s\" to \"%s\" (%d): "
+                 "%s\n",
+                 pid_file, user, pw->pw_uid, strerror (errno));
+        }
+    }
 
     if (setegid(pw->pw_gid) != 0)
         die("Can't set egid to %d: %s\n", pw->pw_gid, strerror (errno));
@@ -387,7 +401,7 @@ int main(int argc, char **argv)
 
     if (lock_file)
     {
-        lockFD = open( lock_file, O_CREAT | O_WRONLY, S_IRUSR | S_IWUSR);
+        lockFD = open(lock_file, O_CREAT | O_WRONLY, S_IRUSR | S_IWUSR);
         if (lockFD < 0)
             die("Can't create lock file \"%s\": %s\n",
                 lock_file, strerror (errno));
@@ -397,8 +411,24 @@ int main(int argc, char **argv)
                 lock_file);
     }
 
+    if (pid_file != NULL)
+    {
+        int fd;
+
+        verbose("Creating PID file \"%s\".\n", pid_file);
+        fd = open(pid_file, O_CREAT | O_WRONLY,
+                  S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+        if (fd < 0)
+        {
+            die ("Can't create PID file \"%s\": %s\n",
+                 pid_file, strerror (errno));
+        }
+
+        close(fd);
+    }
+
     if (user != NULL)
-        switch_user(user, uid);
+        switch_user(user, uid, pid_file);
 
     open_output_files();
 
@@ -416,11 +446,17 @@ int main(int argc, char **argv)
     if (daemon (1, noclose) != 0)
         die("Can't daemonize: %s\n", strerror (errno));
 
+    if (chdir(cwd) != 0)
+    {
+        die("Can't change working directory to \"%s\": %s\n",
+            cwd, strerror (errno));
+    }
+
     if (pid_file != NULL)
     {
         FILE  *fPid = NULL;
 
-        verbose("Opening PID file \"%s\".\n", pid_file);
+        verbose("Writing process ID to \"%s\".\n", pid_file);
         if ( (fPid = fopen (pid_file, "w")) == NULL )
         {
             die("Can't open PID file \"%s\": %s\n",
@@ -429,12 +465,6 @@ int main(int argc, char **argv)
 
         fprintf(fPid, "%d\n", getpid());
         fclose(fPid);
-    }
-
-    if (chdir(cwd) != 0)
-    {
-        die("Can't change working directory to \"%s\": %s\n",
-            cwd, strerror (errno));
     }
 
     execvp(cmd[0], cmd);
