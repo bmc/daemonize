@@ -1,3 +1,8 @@
+Changes in version 1.5.6:
+
+- Accepted and applied a patch from Gary T. Giesen (giesen /at/ snickers.org)
+  that allows the daemonize Makefile to play well with Linux RPMs.
+
 Changes in version 1.5.5:
 
 - Changes in 1.5.4 made it impossible to create PID files in directories

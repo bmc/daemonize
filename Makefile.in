@@ -9,6 +9,7 @@ VPATH		= @srcdir@
 INSTALL_PREFIX	= @prefix@
 INSTALL		= @INSTALL@
 INSTALL_SBIN	= $(INSTALL_PREFIX)/sbin
+INSTALL_MAN    = $(INSTALL_PREFIX)/share/man
 MISSING_SOURCES	= @LOCAL_MISSING_SOURCES@
 MISSING_OBJECTS = $(MISSING_SOURCES:.c=.o)
 CC		= @CC@
@@ -16,15 +17,15 @@ CC		= @CC@
 .PHONY: all psman install clean distclean
 
 .c.o:
-	$(CC) -c $< -I.
+	$(CC) $(CFLAGS) -c $< -I.
 
 all: daemonize 
 
 daemonize: daemonize.o getopt.o $(MISSING_OBJECTS)
-	$(CC) -o daemonize daemonize.o getopt.o $(MISSING_OBJECTS)
+	$(CC) $(CFLAGS) -o daemonize daemonize.o getopt.o $(MISSING_OBJECTS)
 
 testdaemon: testdaemon.o
-	$(CC) -o testdaemon testdaemon.o
+	$(CC) $(CFLAGS) -o testdaemon testdaemon.o
  
 psman: daemonize.ps
 
@@ -34,8 +35,10 @@ daemonize.ps: daemonize.1
 	rm pstmp
 
 install:
-	mkdir -p $(INSTALL_SBIN)
-	$(INSTALL) -o root -m 0755 daemonize $(INSTALL_SBIN)
+	mkdir -p $(DESTDIR)$(INSTALL_SBIN)
+	$(INSTALL) -m 0755 daemonize $(DESTDIR)$(INSTALL_SBIN)
+	mkdir -p $(DESTDIR)$(INSTALL_MAN)/man1
+	$(INSTALL) -m 0644 daemonize.1 $(DESTDIR)$(INSTALL_MAN)/man1
 
 clean:
 	rm -rf *.o daemonize testdaemon *.ps
