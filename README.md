@@ -21,20 +21,20 @@ For a detailed report of the available `configure` options:
 
 ## Notes
 
-1. I have personally compiled and tested daemonize on the following platforms:
+I have personally compiled and tested daemonize on the following platforms:
 
-   - FreeBSD 4.x and 8.0-RELEASE
-   - Mandrake Linux 8.1
-   - Red Hat Linux 6.2
-   - Red Hat Linux 8.0
-   - Red Hat Enterprise Linux 4 / CentOS 4
-   - Solaris (SunOS 5.8)
-   - Fedora Core 5
-   - Ubuntu 8 and 9
-   - Mac OS X 10.4 (Tiger)
+- FreeBSD 4.x and 8.0-RELEASE
+- Mandrake Linux 8.1
+- Red Hat Linux 6.2
+- Red Hat Linux 8.0
+- Red Hat Enterprise Linux 4 / CentOS 4
+- Solaris (SunOS 5.8)
+- Fedora Core 5
+- Ubuntu 8 and 9
+- Mac OS X 10.4 (Tiger)
 
-2. The accompanying "configure" script was generated with GNU autoconf
-   version 2.1.3. It should work, as is, for most Unix systems.
+The accompanying "configure" script was generated with GNU autoconf
+version 2.1.3. It should work, as is, for most Unix systems.
 
 ## Author
 
