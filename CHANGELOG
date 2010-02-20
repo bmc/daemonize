@@ -1,3 +1,26 @@
+daemonize Change Log
+====================
+
+Changes in version 1.6:
+
+Rolled in changes submitted by Ken D. Farnen, (kenf /at/ 14Cubed.COM):
+
+- On slackware, all of the rc.???? scripts run directly from init, and init
+  doesn't set up much in the way of an environment, whereas login stuffs
+  loads of stuff into the environment. Daemonize now ensures that a minimum
+  environment is passed to the exec-ed daemon (IFS and PATH).
+
+- The -u flag now puts USER, HOME and LOGNAME into the environment, for the
+  benefit of programs that rely on them. The lack of these environment
+  variables seems to have deleterious effects on MythTV, for example.
+
+- On Slackware Linux, access to video and audio device entries is
+  controlled by secondary group membership. (e.g., A user who needs access
+  to a dvb device needs to be in group "video", and a user who needs access
+  to dsp devices needs to be in group "audio".), This is typically done by
+  the login code. Daemonize now initializes those group memberships, as
+  well, if the initgroups() function is present.
+
 Changes in version 1.5.6:
 
 - Accepted and applied a patch from Gary T. Giesen (giesen /at/ snickers.org)

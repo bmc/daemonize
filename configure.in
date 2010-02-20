@@ -191,6 +191,7 @@ dnl ---------------------------------------------------------------------------
 dnl Checks for library functions.
 dnl ---------------------------------------------------------------------------
 
+AC_CHECK_FUNC(initgroups, AC_DEFINE(HAVE_INITGROUPS))
 AC_CHECK_FUNC(getpgrp, AC_DEFINE(HAVE_GETPGRP))
 AC_CHECK_FUNC(setpgrp, AC_DEFINE(HAVE_SETPGRP))
 

@@ -160,6 +160,10 @@ typedef __sighandler_t  *sig_t;
 #define sysconf(name) ((long) -1)
 #endif /* HAVE_SYSCONF */
 
+#ifndef HAVE_INITGROUPS
+#define initgroups(name, gid) (0)
+#endif
+
 #ifndef HAVE_STRERROR
 extern char *strerror (int errnum);
 #endif /* HAVE_STRERROR */

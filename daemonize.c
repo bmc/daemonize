@@ -32,7 +32,7 @@
                                  Constants
 \*---------------------------------------------------------------------------*/
 
-#define VERSION "1.5.6"
+#define VERSION "1.6."
 
 /*---------------------------------------------------------------------------*\
                                   Globals
@@ -243,15 +243,25 @@ static void switch_user(const char *user_name, uid_t uid, const char *pid_file)
     if (setgid(pw->pw_gid) != 0)
         die("Can't set gid to %d: %s\n", pw->pw_gid, strerror (errno));
 
+    /*
+      For systems supporting multiple group memberships, make sure ALL
+      groups are added to the process, just in case someone depends on them.
+
+      Patch by Ken Farnen <kenf@14Cubed.COM>, 18 February 2010. Modified
+      to put the #ifdef in the config.h header, rather than in here.
+    */
+    if (initgroups(pw->pw_name, pw->pw_gid) == -1)
+        die("Can't initialize secondary groups for \"%s\": %s\n",
+            pw->pw_name, strerror (errno));
+
     if (pid_file != NULL)
     {
-        verbose ("Changing ownership of PID file to \"%s\" (%d)\n",
-                 user, pw->pw_uid);
-        if (chown (pid_file, pw->pw_uid, pw->pw_gid) == -1)
+        verbose("Changing ownership of PID file to \"%s\" (%d)\n",
+                user, pw->pw_uid);
+        if (chown(pid_file, pw->pw_uid, pw->pw_gid) == -1)
         {
-            die ("Can't change ownership of PID file \"%s\" to \"%s\" (%d): "
-                 "%s\n",
-                 pid_file, user, pw->pw_uid, strerror (errno));
+            die("Can't change owner of PID file \"%s\" to \"%s\" (%d): %s\n",
+                pid_file, user, pw->pw_uid, strerror (errno));
         }
     }
 
@@ -263,6 +273,14 @@ static void switch_user(const char *user_name, uid_t uid, const char *pid_file)
 
     if (seteuid(pw->pw_uid) != 0)
         die("Can't set euid to %d: %s\n", pw->pw_uid, strerror (errno));
+
+    /*
+      Initialize environment to match new username.
+      Patch by Ken Farnen <kenf@14Cubed.COM>, 18 February 2010.
+    */
+    setenv("USER", pw->pw_name,1);
+    setenv("LOGNAME", pw->pw_name,1);
+    setenv("HOME", pw->pw_dir,1);
 }
 
 /**
@@ -466,6 +484,16 @@ int main(int argc, char **argv)
         fprintf(fPid, "%d\n", getpid());
         fclose(fPid);
     }
+
+    /*
+      Make sure we have a relatively sane environment
+      Patch by Ken Farnen <kenf@14Cubed.COM>, 18 February 2010.
+    */
+    if (getenv("IFS") == NULL)
+        setenv("IFS"," \t\n",1);
+
+    if (getenv("PATH") == NULL)
+        setenv("PATH","/usr/local/sbin:/sbin:/bin:/usr/sbin:/usr/bin", 1);
 
     execvp(cmd[0], cmd);
 

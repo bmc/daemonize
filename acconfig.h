@@ -41,6 +41,9 @@
 /* Define if you have the setpgrp() function. */
 #undef HAVE_SETPGRP
 
+/* Define if you have the initgroups() function. */
+#undef HAVE_INITGROUPS
+
 /* Define if you have the setsid() function. Almost everyone does. */
 #undef HAVE_SETSID
 
