@@ -6,8 +6,8 @@
 ## Why can't I just use "&" from the shell?
 
 Using "&" puts the program in the background, but it doesn't do all the other
-things that make the program a true daemon. With some shell, a backgrounded
-program will ignore `SIGHUP`; with others shell, it will not. Regardless, using
+things that make the program a true daemon. With some shells, a backgrounded
+program will ignore `SIGHUP`; with other shells, it will not. Regardless, using
 "&" does not:
 
 * disaassociate the program from its process group or control terminal
@@ -18,7 +18,7 @@ program will ignore `SIGHUP`; with others shell, it will not. Regardless, using
 
 These are all things a true daemon must do.
 
-## Well, why can't I use *nohup*(1) then?
+## Well, why can't I use *nohup*(1), then?
 
 The *nohup* command has similar problems to "&". While it *does* guarantee
 that the process will ignore `SIGHUP`, it doesn't do any of the other
