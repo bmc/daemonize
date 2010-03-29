@@ -1,0 +1,3 @@
+exclude: run-markdown.sh
+pygments: false
+codeurl: http://bmc.github.com/thing

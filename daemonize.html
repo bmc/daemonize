@@ -1,0 +1,452 @@
+<!-- Creator     : groff version 1.19.1 -->
+<!-- CreationDate: Mon Mar 29 17:09:39 2010 -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta name="generator" content="groff -Thtml, see www.gnu.org">
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<meta name="Content-Style" content="text/css">
+<title>daemonize</title>
+</head>
+<body>
+
+<h1 align=center>daemonize</h1>
+<a href="#NAME">NAME</a><br>
+<a href="#SYNOPSIS">SYNOPSIS</a><br>
+<a href="#DESCRIPTION">DESCRIPTION</a><br>
+<a href="#OPTIONS">OPTIONS</a><br>
+<a href="#NOTES">NOTES</a><br>
+<a href="#LICENSE">LICENSE</a><br>
+<a href="#SEE ALSO">SEE ALSO</a><br>
+<a href="#AUTHOR">AUTHOR</a><br>
+<a href="#CONTRIBUTORS">CONTRIBUTORS</a><br>
+
+<hr>
+<a name="NAME"></a>
+<h2>NAME</h2>
+<!-- INDENTATION -->
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="89%">
+<p>daemonize &minus; run a program as a Unix daemon</p>
+</td>
+</table>
+<a name="SYNOPSIS"></a>
+<h2>SYNOPSIS</h2>
+<!-- INDENTATION -->
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="89%">
+<p><b>daemonize</b> [-a] [-c <i>directory</i>] [-e
+<i>stderr</i>] [-o <i>stdout</i>] [-p <i>pidfile</i>] [-l
+<i>lockfile</i>] [-u <i>user</i>] [-v] <i>path [arg]
+...</i></p>
+</td>
+</table>
+<a name="DESCRIPTION"></a>
+<h2>DESCRIPTION</h2>
+<!-- INDENTATION -->
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="89%">
+<p><b>daemonize</b> runs a command as a Unix daemon. As
+defined in W. Richard Stevens&rsquo; 1990 book, <i>Unix
+Network Programming</i> (Addison-Wesley, 1990), a daemon is
+&ldquo;a process that executes &lsquo;in the
+background&rsquo; (i.e., without an associated terminal or
+login shell) either waiting for some event to occur, or
+waiting to perform some specified task on a periodic
+basis.&rdquo; Upon startup, a typical daemon program
+will:</p>
+</td>
+</table>
+<!-- TABS -->
+<table width="100%" border=0 rules="none" frame="void"
+       cols="4" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="1%">
+
+<p>o</p>
+</td>
+<td width="2%"></td>
+<td width="86%">
+
+<p>Close all open file descriptors (especially standard
+input, standard output and standard error)</p>
+</td>
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="1%">
+
+<p>o</p>
+</td>
+<td width="2%"></td>
+<td width="86%">
+
+<p>Change its working directory to the root filesystem, to
+ensure that it doesn&rsquo;t tie up another filesystem and
+prevent it from being unmounted</p>
+</td>
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="1%">
+
+<p>o</p>
+</td>
+<td width="2%"></td>
+<td width="86%">
+
+<p>Reset its <i>umask</i> value</p>
+</td>
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="1%">
+
+<p>o</p>
+</td>
+<td width="2%"></td>
+<td width="86%">
+
+<p>Run in the background (i.e., <i>fork</i>)</p>
+</td>
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="1%">
+
+<p>o</p>
+</td>
+<td width="2%"></td>
+<td width="86%">
+
+<p>Disassociate from its process group (usually a shell),
+to insulate itself from signals (such as HUP) sent to the
+process group</p>
+</td>
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="1%">
+
+<p>o</p>
+</td>
+<td width="2%"></td>
+<td width="86%">
+
+<p>Ignore all terminal I/O signals</p>
+</td>
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="1%">
+
+<p>o</p>
+</td>
+<td width="2%"></td>
+<td width="86%">
+
+<p>Disassociate from the control terminal (and take steps
+not to reacquire one)</p>
+</td>
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="1%">
+
+<p>o</p>
+</td>
+<td width="2%"></td>
+<td width="86%">
+
+<p>Handle any <small>SIGCLD</small> signals</p>
+</td>
+</table>
+<!-- INDENTATION -->
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="89%">
+<p>Most programs that are designed to be run as daemons do
+that work for themselves. However, you&rsquo;ll occasionally
+run across one that does not. When you must run a daemon
+program that does not properly make itself into a true Unix
+daemon, you can use <b>daemonize</b> to force it to run as a
+true daemon.</p>
+</td>
+</table>
+<a name="OPTIONS"></a>
+<h2>OPTIONS</h2>
+<!-- TABS -->
+<table width="100%" border=0 rules="none" frame="void"
+       cols="4" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="3%">
+
+<p>-a</p>
+</td>
+<td width="8%"></td>
+<td width="78%">
+
+<p>Append to the output files, rather than overwriting them
+(which is the default). Only applicable if <i>-e</i> and/or
+<i>-o</i> are specified.</p>
+</td>
+</table>
+<!-- INDENTATION -->
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="89%">
+<p>-c <i>directory</i></p></td>
+</table>
+<!-- INDENTATION -->
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="22%"></td>
+<td width="78%">
+<p>Specifies the directory to which to change before running
+the program. Defaults to &quot;/&quot;. The choice for this
+option is important. The file system containing the
+daemon&rsquo;s working directory cannot be unmounted while
+the daemon is running. That&rsquo;s why most daemons are
+careful to use a working directory on the root file
+system.</p>
+</td>
+</table>
+<!-- INDENTATION -->
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="89%">
+<p>-e <i>stderr</i></p></td>
+</table>
+<!-- INDENTATION -->
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="22%"></td>
+<td width="78%">
+<p>Redirect standard error to the specified file, instead of
+&quot;/dev/null&quot;.</p>
+<!-- INDENTATION -->
+<p><b>Warning:</b> Be careful where you redirect the output!
+The file system containing the open file cannot be unmounted
+as long as the file is open. For best results, make sure
+that this output file is on the same file system as the
+daemon&rsquo;s working directory. (See the <i>-c</i>
+option.)</p>
+</td>
+</table>
+<!-- INDENTATION -->
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="89%">
+<p>-o <i>stdout</i></p></td>
+</table>
+<!-- INDENTATION -->
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="22%"></td>
+<td width="78%">
+<p>Redirect standard output to the specified file, instead
+of &quot;/dev/null&quot;.</p>
+<!-- INDENTATION -->
+<p><b>Warning:</b> Be careful where you redirect the output!
+The file system containing the open file cannot be unmounted
+as long as the file is open. For best results, make sure
+that this output file is on the same file system as the
+daemon&rsquo;s working directory. (See the <i>-c</i>
+option.)</p>
+</td>
+</table>
+<!-- INDENTATION -->
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="89%">
+<p>-p <i>pidfile</i></p></td>
+</table>
+<!-- INDENTATION -->
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="22%"></td>
+<td width="78%">
+<p>Causes <b>daemonize</b> to write the numeric process ID
+(PID) of the running daemon to the specified file. This
+option is useful when the program being daemonized
+doesn&rsquo;t create its own PID file.</p>
+</td>
+</table>
+<!-- INDENTATION -->
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="89%">
+<p>-l <i>lockfile</i></p></td>
+</table>
+<!-- INDENTATION -->
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="22%"></td>
+<td width="78%">
+<p>Single-instance checking. Causes <b>daemonize</b> to
+ensure that no more than one instance of the daemon is
+running by placing an exclusive lock on given lockfile. If
+another process already has a lock on the lockfile,
+<i>daemonize</i> exits.</p>
+</td>
+</table>
+<!-- INDENTATION -->
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="89%">
+<p>It <i>is</i> possible to use the <i>pidfile</i> as the
+lock file (e.g., &quot;-p /var/run/foo -l
+/var/run/foo&quot;), though typical daemons use separate
+files.</p>
+<!-- INDENTATION -->
+<p>NOTE: If the executed program decides to close all file
+descriptors, the single-instance locking will not work,
+since the lock depends on an open file descriptor. (The
+operating system kernel removes the lock once the process
+holding the lock closes the file or exits.) Normal processes
+that do not daemonize themselves do not usually close all
+file descriptors.</p>
+</td>
+</table>
+<!-- INDENTATION -->
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="89%">
+<p>-u <i>user</i></p></td>
+</table>
+<!-- INDENTATION -->
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="22%"></td>
+<td width="78%">
+<p>Run the program as the specified user. This option only
+works if <b>daemonize</b> is invoked by the superuser. Note:
+For obvious reasons, it&rsquo;s very dangerous to install
+<b>daemonize</b> as a <i>setuid-to-root</i> executable. For
+that reason, <b>daemonize</b> will refuse to run if it
+detects that it has been installed that way.</p>
+</td>
+</table>
+<!-- TABS -->
+<table width="100%" border=0 rules="none" frame="void"
+       cols="4" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="3%">
+
+<p>-v</p>
+</td>
+<td width="8%"></td>
+<td width="78%">
+
+<p>Cause <b>daemonize</b> to write verbose messages to
+standard error, telling what it&rsquo;s doing as it
+daemonizes the program.</p>
+</td>
+</table>
+<a name="NOTES"></a>
+<h2>NOTES</h2>
+<!-- INDENTATION -->
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="89%">
+<p>If the host operating system provides the
+<b>daemon</b>(3) library routine, <b>daemonize</b> will use
+it. Otherwise, <b>daemonize</b> uses its own version of
+<b>daemon</b>(3). This choice is made at compile time. (BSD
+4.4-derived operating systems tend to provide their own
+<b>daemon</b>(3) routine.)</p>
+<!-- INDENTATION -->
+<p>FreeBSD 5.0 introduced a <b>daemon</b>(1) command that is
+similar to, but less functional, than <b>daemonize</b>.</p>
+</td>
+</table>
+<a name="LICENSE"></a>
+<h2>LICENSE</h2>
+<!-- INDENTATION -->
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="89%">
+<p>This program released under a BSD-style license. For more
+details, consult the LICENSE file accompanying the source
+distribution, or visit
+&quot;http://www.clapper.org/software/daemonize/LICENSE&quot;.</p>
+</td>
+</table>
+<a name="SEE ALSO"></a>
+<h2>SEE ALSO</h2>
+<!-- INDENTATION -->
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="89%">
+<p><b>daemon</b>(3), <b>setsid</b>(2), <b>flock(2)</b></p>
+<!-- INDENTATION -->
+<p><b>daemonize</b> Home Page:
+http://www.clapper.org/software/daemonize/</p>
+</td>
+</table>
+<a name="AUTHOR"></a>
+<h2>AUTHOR</h2>
+<!-- INDENTATION -->
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="89%">
+<p>Brian M. Clapper, <i>bmc &lt;at&gt; clapper &lt;dot&gt;
+org</i></p>
+</td>
+</table>
+<a name="CONTRIBUTORS"></a>
+<h2>CONTRIBUTORS</h2>
+<!-- INDENTATION -->
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="89%">
+<p>Support for the <i>-e</i> and <i>-o</i> options is based
+on a patch submitted by Tim Starling <i>(tstarling
+&lt;at&gt; wikimedia &lt;dot&gt; org).</i></p>
+<!-- INDENTATION -->
+<p>Support for the <i>-l</i> option is based on a patch
+submitted by Yakov Lerner <i>(iler.ml &lt;at&gt; gmail
+&lt;dot&gt; com).</i></p>
+</td>
+</table>
+<hr>
+</body>
+</html>
