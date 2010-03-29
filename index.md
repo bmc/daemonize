@@ -110,14 +110,14 @@ Brian Clapper, *bmc@clapper.org*
 [daemonize-home]: http://www.clapper.org/software/daemonize
 [github-repo]: http://github.com/bmc/daemonize
 
-## LICENSE
+## License
 
 With the exception of the `install-sh` script and the `getopt.c` source,
 this software is released under BSD license. See the [license][] for details.
 
 [license]: license.html
 
-## COPYRIGHT
+## Copyright
 
 With the exception of the "install-sh" script and the "getopt.c" source,
 this software is copyright 2003-2010, Brian M. Clapper
