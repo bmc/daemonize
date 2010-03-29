@@ -49,9 +49,30 @@ See the [*man* page][] for full details.
 
 [FreeBSD]: http://www.freebsd.org/
 
+## Getting *daemonize*
+
+*daemonize* is written in C. Given the number of Unix-like operating
+systems, and the number of releases of each, it is impractical for me to
+provide binaries of *daemonize* for every combination of Unix-like
+operating system and operating system release. So, currently, you must
+build *daemonize* from source code, as described below.
+
+There are two ways to get the source code:
+
+* Download a release (zip file or tarball) from the [downloads page][].
+* Clone a copy of the Git repository:
+
+        $ git clone git://github.com/bmc/daemonize.git
+        $ git clone http://github.com/bmc/daemonizefortune.git
+
+
+[downloads page]: http://github.com/bmc/daemonize/downloads
+
 ## Installation
 
-Normal installation:
+Once you've unpacked the source, change your working directory to the
+*daemonize* directory. From there, building and installing the code is
+fairly typical:
 
     $ sh configure
     $ make
