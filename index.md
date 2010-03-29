@@ -5,8 +5,6 @@ layout: withTOC
 
 ## Introduction
 
-*daemonize* is a command-line utility that runs a command as a Unix daemon.
-
 *daemonize* runs a command as a Unix daemon. As defined in W. Richard
 Stevens’ 1990 book, [*UNIX Network Programming*][] (Addison-Wesley, 1990),
 a daemon is “a process that executes ‘in the background’ (i.e., without an
