@@ -1,6 +1,11 @@
 daemonize Change Log
 ====================
 
+Changes in version 1.6.1:
+
+- Makefile now generates daemonize.html, an HTML-ized version of the man page.
+
+-----------------------------------------------------------------------------
 Changes in version 1.6:
 
 Rolled in changes submitted by Ken D. Farnen, (kenf /at/ 14Cubed.COM):
@@ -21,11 +26,13 @@ Rolled in changes submitted by Ken D. Farnen, (kenf /at/ 14Cubed.COM):
   the login code. Daemonize now initializes those group memberships, as
   well, if the initgroups() function is present.
 
+-----------------------------------------------------------------------------
 Changes in version 1.5.6:
 
 - Accepted and applied a patch from Gary T. Giesen (giesen /at/ snickers.org)
   that allows the daemonize Makefile to play well with Linux RPMs.
 
+-----------------------------------------------------------------------------
 Changes in version 1.5.5:
 
 - Changes in 1.5.4 made it impossible to create PID files in directories
@@ -34,7 +41,7 @@ Changes in version 1.5.5:
   corrected slightly to ensure that the proper PID is written and that the
   PID file has mode 0644.
 
-
+-----------------------------------------------------------------------------
 Changes in version 1.5.4:
 
 - If a user name is specified via the -u option, the output files specified
@@ -47,14 +54,14 @@ Changes in version 1.5.4:
 
 - Added some documentation to the code.
 
-
+-----------------------------------------------------------------------------
 Changes in version 1.5.3:
 
 - Minor licensing change. (configure.in still emitted a message indicated
   that daemonize is GPL-licensed. It's BSD-licensed.)
 - Updated copyright information.
 
-
+-----------------------------------------------------------------------------
 Changes in version 1.5.2:
 
 Two changes suggested and supplied by Yakov Lerner <iler.ml <at> gmail.com>:
@@ -65,12 +72,12 @@ Two changes suggested and supplied by Yakov Lerner <iler.ml <at> gmail.com>:
 - Now makes additional checks to ensure that the program specified to
   daemonize is a regular file, not a directory.
 
-
+-----------------------------------------------------------------------------
 Changes in version 1.5.1:
 
 - Now released under BSD-style license, not GNU Public License.
 
-
+-----------------------------------------------------------------------------
 Changes in version 1.5:
 
 - daemonize can now optionally redirect the daemon's standard output and
@@ -78,7 +85,7 @@ Changes in version 1.5:
 
 - configure now supports a local basename() emulator.
 
-
+-----------------------------------------------------------------------------
 Changes in version 1.4:
 
 - Version of daemon(3) shipped with daemonize attempted to redirect
@@ -98,12 +105,12 @@ Changes in version 1.4:
 
 - daemonize now installs with 0755 permissions, instead of 0700.
 
-
+-----------------------------------------------------------------------------
 Changes in version 1.3:
 
 - The "-c" option now actually works. Duh.
 
-
+-----------------------------------------------------------------------------
 Changes in version 1.2:
 
 - The external names in getopt.c are now prefixed with "x_" (e.g.,
@@ -113,7 +120,7 @@ Changes in version 1.2:
   to Michael Fuchs <mf /at/ mfox /dot/ de> for pointing out the problem
   on Solaris.
 
-
+-----------------------------------------------------------------------------
 Changes in version 1.1:
 
 - Now uses local getopt.c unconditionally, instead of defaulting to

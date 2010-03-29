@@ -34,6 +34,9 @@ daemonize.ps: daemonize.1
 	ps2ps pstmp daemonize.ps
 	rm pstmp
 
+daemonize.html: daemonize.1
+	groff -man -Thtml daemonize.1 >daemonize.html
+
 install:
 	mkdir -p $(DESTDIR)$(INSTALL_SBIN)
 	$(INSTALL) -m 0755 daemonize $(DESTDIR)$(INSTALL_SBIN)
