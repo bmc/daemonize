@@ -107,7 +107,7 @@ Brian Clapper, *bmc@clapper.org*
 * [Home Page][daemonize-home]
 * [GitHub repo][github-repo]
 
-[daemonize-home]: http://www.clapper.org/software/daemonize
+[daemonize-home]: http://bmc.github.com/daemonize
 [github-repo]: http://github.com/bmc/daemonize
 
 ## License
@@ -122,6 +122,14 @@ this software is released under BSD license. See the [license][] for details.
 With the exception of the "install-sh" script and the "getopt.c" source,
 this software is copyright 2003-2010, Brian M. Clapper
 
----------------------------------------------------------------------------
+## Patches
 
+I gladly accept patches from their original authors. Feel free to email
+patches to me or to fork the [GitHub repository][github-repo] and send me a
+pull request. Along with any patch you send:
 
+* Please state that the patch is your original work.
+* Please indicate that you license the work to the *Poll Emulator*
+  project under a [BSD License][license].
+
+[GitHub repository]: http://github.com/bmc/daemonize
