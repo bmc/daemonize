@@ -4,6 +4,11 @@ daemonize Change Log
 Changes in version 1.6.1:
 
 - Makefile now generates daemonize.html, an HTML-ized version of the man page.
+- Fixed usage message, which incorrectly said "stderr", instead of "stdout"
+  in the description of the "-o" option. Thanks to [Sam Pierson][] for the
+  patch.
+
+[Sam Pierson]: http://sampierson.com/blog
 
 -----------------------------------------------------------------------------
 Changes in version 1.6:
