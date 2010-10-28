@@ -6,8 +6,8 @@ layout: withTOC
 ## Introduction
 
 *daemonize* runs a command as a Unix daemon. As defined in W. Richard
-Stevens’ 1990 book, [*UNIX Network Programming*][] (Addison-Wesley, 1990),
-a daemon is “a process that executes ‘in the background’ (i.e., without an
+Stevens' 1990 book, [*UNIX Network Programming*][] (Addison-Wesley, 1990),
+a daemon is “a process that executes ‘in the background' (i.e., without an
 associated terminal or login shell) either waiting for some event to occur,
 or waiting to perform some specified task on a periodic basis.” Upon
 startup, a typical daemon program will:
@@ -15,7 +15,7 @@ startup, a typical daemon program will:
 * Close all open file descriptors (especially standard input, standard
   output and standard error)
 * Change its working directory to the root filesystem, to ensure that it
-  doesn’t tie up another filesystem and prevent it from being unmounted
+  doesn't tie up another filesystem and prevent it from being unmounted
 * Reset its *umask* value
 * Run in the background (i.e., fork)
 * Disassociate from its process group (usually a shell), to insulate itself
@@ -25,7 +25,7 @@ startup, a typical daemon program will:
 * Handle any `SIGCLD` signals
 
 Most programs that are designed to be run as daemons do that work for
-themselves. However, you’ll occasionally run across one that does not. When
+themselves. However, you'll occasionally run across one that does not. When
 you must run a daemon program that does not properly make itself into a
 true Unix daemon, you can use *daemonize* to force it to run as a true
 daemon.
@@ -60,9 +60,8 @@ There are two ways to get the source code:
 * Download a release (zip file or tarball) from the [downloads page][].
 * Clone a copy of the Git repository:
 
-        $ git clone git://github.com/bmc/daemonize.git
-        $ git clone http://github.com/bmc/daemonizefortune.git
-
+    $ git clone git://github.com/bmc/daemonize.git
+    $ git clone http://github.com/bmc/daemonizefortune.git
 
 [downloads page]: http://github.com/bmc/daemonize/downloads
 
@@ -84,9 +83,7 @@ For a detailed report of the available `configure` options:
 
 I have personally compiled and tested daemonize on the following platforms:
 
-- FreeBSD 4.x and 8.0-RELEASE
-- Mandrake Linux 8.1
-- Red Hat Linux 6.2 and 8.0
+- FreeBSD 4.x, 8.0-RELEASE, and 8.1-RELEASE
 - Red Hat Enterprise Linux 4 / CentOS 4
 - Solaris (SunOS 5.8)
 - Fedora Core 5
