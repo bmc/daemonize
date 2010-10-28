@@ -111,7 +111,7 @@ static void usage(char *prog)
 "             unless -e and/or -o are specified.",
 "-c <dir>     Set daemon's working directory to <dir>.",
 "-e <stderr>  Send daemon's stderr to file <stderr>, instead of /dev/null.",
-"-o <stdout>  Send daemon's stderr to file <stdout>, instead of /dev/null.",
+"-o <stdout>  Send daemon's stdout to file <stdout>, instead of /dev/null.",
 "-p <pidfile> Save PID to <pidfile>.",
 "-u <user>    Run daemon as user <user>. Requires invocation as root.",
 "-l <lockfile> Single-instance checking using lockfile <lockfile>.",
