@@ -102,7 +102,7 @@ Brian Clapper, *bmc@clapper.org*
 * [Home Page][daemonize-home]
 * [GitHub repo][github-repo]
 
-[daemonize-home]: http://bmc.github.com/daemonize
+[daemonize-home]: http://software.clapper.org/daemonize
 [github-repo]: http://github.com/bmc/daemonize
 
 ## License
