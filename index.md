@@ -57,11 +57,12 @@ build *daemonize* from source code, as described below.
 
 There are two ways to get the source code:
 
-* Download a release (zip file or tarball) from the [downloads page][].
+* Download a release zip file from the [downloads page][].
+
 * Clone a copy of the Git repository:
 
     $ git clone git://github.com/bmc/daemonize.git
-    $ git clone http://github.com/bmc/daemonizefortune.git
+    $ git clone http://github.com/bmc/daemonize.git
 
 [downloads page]: http://github.com/bmc/daemonize/downloads
 
@@ -92,6 +93,13 @@ I have personally compiled and tested daemonize on the following platforms:
 
 The accompanying "configure" script was generated with GNU autoconf
 version 2.1.3. It should work, as is, for most Unix systems.
+
+## Change Log
+
+See the *daemonize* [Change Log][] for a description of the changes in
+each version.
+
+[Change Log]: https://github.com/bmc/daemonize/blob/master/CHANGELOG.md
 
 ## Author
 
