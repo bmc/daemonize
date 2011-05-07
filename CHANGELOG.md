@@ -1,6 +1,13 @@
 daemonize Change Log
 ====================
 
+Changes in version 1.6.2:
+
+- Local copy of daemon(3) now errors out (with a message to syslog(3)) if
+  it cannot open /dev/null. Thanks to Folkert van Heusden
+  *folkert.mobiel /at/ gmail.com* for noticing the problem.
+
+-----------------------------------------------------------------------------
 Changes in version 1.6.1:
 
 - Makefile now generates daemonize.html, an HTML-ized version of the man page.

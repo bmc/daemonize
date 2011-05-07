@@ -1,4 +1,3 @@
-
 ## License for *daemonize*
 
 (Excludes `install.sh` and `getopt.c`.)

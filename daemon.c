@@ -27,6 +27,9 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <syslog.h>
+#include <errno.h>
+#include <string.h>
 #include <assert.h>
 #include <fcntl.h>
 #include <signal.h>
@@ -45,20 +48,25 @@
 
 static void redirect_fds()
 {
-    (void) close (0);
-    (void) close (1);
-    (void) close (2);
+   (void) close(0);
+   (void) close(1);
+   (void) close(2);
 
-    open ("/dev/null", O_RDWR);
-    (void) dup (0);
-    (void) dup (0);
+   if (open("/dev/null", O_RDWR) != 0)
+   {
+       syslog(LOG_ERROR, "Unable to open /dev/null: %s", strerror(errno));
+       exit(1);
+   }
+
+   (void) dup(0);
+   (void) dup(0);
 }
 
-static int do_fork (void)
+static int do_fork(void)
 {
     int status = 0;
 
-    switch (fork())
+    switch(fork())
     {
         case 0:
             /* This is the child that will become the daemon. */
@@ -71,7 +79,7 @@ static int do_fork (void)
 
         default:
             /* Parent: Exit. */
-            _exit (0);
+            _exit(0);
     }
 
     return status;
@@ -81,39 +89,39 @@ static int do_fork (void)
                               Public Routines
 \*---------------------------------------------------------------------------*/
 
-int daemon (int nochdir, int noclose)
+int daemon(int nochdir, int noclose)
 {
     int status = 0;
 
-    printf ("_SC_OPEN_MAX=%d", sysconf (_SC_OPEN_MAX));
+    openlog("daemonize", LOG_PID, LOG_DAEMON);
 
     /* Fork once to go into the background. */
-    if ( (status = do_fork()) < 0 )
+    if((status = do_fork()) < 0 )
         ;
 
     /* Create new session */
-    else if (setsid() < 0)               /* shouldn't fail */
+    else if(setsid() < 0)               /* shouldn't fail */
         status = -1;
 
     /* Fork again to ensure that daemon never reacquires a control terminal. */
-    else if ( (status = do_fork()) < 0 )
+    else if((status = do_fork()) < 0 )
         ;
 
     else
     {
         /* clear any inherited umask(2) value */
 
-        umask (0);
+        umask(0);
 
         /* We're there. */
 
-        if (! nochdir)
+        if(! nochdir)
         {
             /* Go to a neutral corner. */
             chdir("/");
         }
 
-        if (! noclose)
+        if(! noclose)
             redirect_fds();
     }
 
