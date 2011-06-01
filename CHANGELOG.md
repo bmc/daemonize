@@ -1,6 +1,13 @@
 daemonize Change Log
 ====================
 
+Changes in version 1.7:
+
+- Now supports a `-E` parameter, which allows setting one or more environment
+  variables, to be passed to the daemon. Based on a suggestion from
+  Michel Gouget *michel /at/ gouget.org*.
+
+-----------------------------------------------------------------------------
 Changes in version 1.6.2:
 
 - Local copy of daemon(3) now errors out (with a message to syslog(3)) if

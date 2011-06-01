@@ -1,6 +1,4 @@
 /*---------------------------------------------------------------------------*\
-  $Id$
-
   This code has been adapted from the original AT&T public domain
   implementation of getopt(3).  The following comment comes from the original
   source, as posted to a newsgroup in 1987.

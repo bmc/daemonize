@@ -131,6 +131,9 @@
 /* Define if you have the <errno.h> header file.  */
 #undef HAVE_ERRNO_H
 
+/* Define if you have the setenv(3) function. */
+#undef HAVE_SETENV
+
 /*****************************************************************************\
                      DON'T TOUCH ANYTHING BELOW HERE!
 \*****************************************************************************/
@@ -191,6 +194,10 @@ extern int daemon (int nochdir, int noclose);
 #include <errno.h>
 #else
 extern int errno;
+#endif
+
+#ifndef HAVE_SETENV
+extern int setenv(const char *name, const char *value, int overwrite);
 #endif
 
 #ifndef STDC_HEADERS

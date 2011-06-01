@@ -30,7 +30,7 @@
                                  Constants
 \*---------------------------------------------------------------------------*/
 
-#define VERSION "1.6.2"
+#define VERSION "1.7.0"
 
 /*---------------------------------------------------------------------------*\
                                   Globals
@@ -48,6 +48,7 @@ static int          null_fd    = -1;
 static int          out_fd     = -1;
 static int          err_fd     = -1;
 static int          append     = 0;
+static const char **env        = NULL;
 
 /*---------------------------------------------------------------------------*\
                              Private Functions
@@ -109,11 +110,12 @@ static void usage(char *prog)
 "             unless -e and/or -o are specified.",
 "-c <dir>     Set daemon's working directory to <dir>.",
 "-e <stderr>  Send daemon's stderr to file <stderr>, instead of /dev/null.",
+"-E var=value Pass environment setting to daemon. May appear multiple times.",
 "-o <stdout>  Send daemon's stdout to file <stdout>, instead of /dev/null.",
 "-p <pidfile> Save PID to <pidfile>.",
 "-u <user>    Run daemon as user <user>. Requires invocation as root.",
 "-l <lockfile> Single-instance checking using lockfile <lockfile>.",
-"-v           Issue verbose messages to stdout while daemonizing"
+"-v           Issue verbose messages to stdout while daemonizing."
     };
 
     int i;
@@ -127,6 +129,33 @@ static void usage(char *prog)
     }
 
     exit(1);
+}
+
+/**
+ * Add a string of the name "name=value" to the environment. Aborts on error.
+ *
+ * Parameters:
+ *     opt    - option character, for errors
+ *     envvar - string of the form name=value
+ */
+static void add_to_env(char opt, const char *envvar)
+{
+    char *eq = strchr(envvar, '=');
+    if (eq == NULL)
+        die("Argument to -%c (\"%s\") is not of the form name=value.\n",
+            opt, envvar);
+
+    /* Split the string into its name/value substrings. */
+
+    int name_len = (int) (eq - envvar);
+    int val_len  = (strlen(envvar) - name_len) - 1;
+
+    char *name = (char *) malloc(name_len + 1);
+    char *value = (char *) malloc(val_len + 1);
+    (void) strncat(name, envvar, name_len);
+    eq++;
+    (void) strncat(value, eq, val_len);
+    setenv(name, value, 1);
 }
 
 /**
@@ -164,7 +193,7 @@ static void parse_params(int argc, char **argv)
       Using x_getopt() ensures that daemonize uses its own version, which
       always behaves consistently.
     */
-    while ( (opt = x_getopt(argc, argv, "ac:u:p:vo:e:l:")) != -1)
+    while ( (opt = x_getopt(argc, argv, "ac:u:p:vo:e:E:l:")) != -1)
     {
         switch (opt)
         {
@@ -200,6 +229,9 @@ static void parse_params(int argc, char **argv)
                 lock_file = x_optarg;
                 break;
 
+            case 'E':
+                add_to_env('E', x_optarg);
+                break;
 
             default:
                 fprintf(stderr, "Bad option: -%c\n", x_optopt);

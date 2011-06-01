@@ -98,6 +98,12 @@ the daemon's working directory. (See the
 .I -c
 option.)
 .\"
+.IP "-E \fIname=value\fP"
+Add an environment variable to the environment the daemon will see. The
+parameter must be of the form
+.I name=value.
+This parameter may be specified multiple times.
+.\"
 .IP "-o \fIstdout\fP"
 Redirect standard output to the specified file, instead of "/dev/null".
 .sp

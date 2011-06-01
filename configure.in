@@ -228,6 +228,9 @@ AC_CHECK_FUNC(daemon, AC_DEFINE(HAVE_DAEMON),
 AC_CHECK_FUNC(basename, AC_DEFINE(HAVE_BASENAME),
 	      LOCAL_MISSING_SOURCES="${LOCAL_MISSING_SOURCES} basename.c")
 
+AC_CHECK_FUNC(setenv, AC_DEFINE(HAVE_SETENV),
+	      LOCAL_MISSING_SOURCES="${LOCAL_MISSING_SOURCES} setenv.c")
+
 AC_SUBST(LOCAL_MISSING_SOURCES)
 
 dnl ---------------------------------------------------------------------------
