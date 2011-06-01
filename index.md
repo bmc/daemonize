@@ -57,9 +57,16 @@ build *daemonize* from source code, as described below.
 
 There are two ways to get the source code:
 
-* Download a release zip file from the [downloads page][].
+### Download a release zip
 
-* Clone a copy of the Git repository:
+You can download a release zip file, containing the source, from the
+[downloads page][]. Just unzip the file to unpack the source
+directory.
+
+### Clone the Git repository
+
+You can also simply clone the *git* repository, using one of the following
+commands.
 
     $ git clone git://github.com/bmc/daemonize.git
     $ git clone http://github.com/bmc/daemonize.git
@@ -84,12 +91,12 @@ For a detailed report of the available `configure` options:
 
 I have personally compiled and tested daemonize on the following platforms:
 
-- FreeBSD 4.x, 8.0-RELEASE, 8.1-RELEASE and 8.2-RELEASE
-- Red Hat Enterprise Linux 4 / CentOS 4
-- Solaris (SunOS 5.8)
-- Fedora Core 5
-- Ubuntu 8, 9, 10, and 11
-- Mac OS X 10.4 (Tiger) and 10.6 (Snow Leopard)
+* FreeBSD 4.x, 8.0-RELEASE, 8.1-RELEASE and 8.2-RELEASE
+* Red Hat Enterprise Linux 4 / CentOS 4
+* Solaris (SunOS 5.8)
+* Fedora Core 5
+* Ubuntu 8, 9, 10, and 11
+* Mac OS X 10.4 (Tiger) and 10.6 (Snow Leopard)
 
 The accompanying "configure" script was generated with GNU autoconf
 version 2.1.3. It should work, as is, for most Unix systems.
