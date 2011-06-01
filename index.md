@@ -123,7 +123,7 @@ this software is released under BSD license. See the [license][] for details.
 ## Copyright
 
 With the exception of the "install-sh" script and the "getopt.c" source,
-this software is copyright 2003-2010, Brian M. Clapper
+this software is copyright 2003-2011, Brian M. Clapper
 
 ## Patches
 

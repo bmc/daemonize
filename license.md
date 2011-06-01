@@ -3,14 +3,14 @@ title: License for daemonize
 layout: default
 ---
 
-## License for *daemonize*
+# License for *daemonize*
 
 (Excludes `install.sh` and `getopt.c`.)
 
 This software is released under a BSD license, adapted from
 <http://opensource.org/licenses/bsd-license.php>
 
-Copyright &copy; 2003-2010 Brian M. Clapper.
+Copyright &copy; 2003-2011 Brian M. Clapper.
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -39,7 +39,7 @@ CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
 ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 
-## License for `install-sh`
+# License for `install-sh`
 
 Copyright &copy; 1991 by the Massachusetts Institute of Technology
 
@@ -53,7 +53,7 @@ written prior permission. M.I.T. makes no representations about the
 suitability of this software for any purpose. It is provided "as is"
 without express or implied warranty.
 
-## License for `getopt.c`
+# License for `getopt.c`
 
 The version of `getopt()` that is compiled into *daemonize* is adapted from
 the original AT&T public domain implementation of *getopt*(3) and is in the
