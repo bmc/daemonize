@@ -49,6 +49,3 @@ clean:
 distclean:	clean
 	rm -rf config.status config.log config.cache config.h Makefile autom?te.cache
 
-FAQ.html: FAQ.md FAQ-header.html FAQ-footer.html
-	(cat FAQ-header.html; markdown FAQ.md; cat FAQ-footer.html) >FAQ.html
-
