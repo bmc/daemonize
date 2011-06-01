@@ -3,7 +3,7 @@ title: daemonize — A tool to run a command as a daemon
 layout: withTOC
 ---
 
-## Introduction
+# Introduction
 
 *daemonize* runs a command as a Unix daemon. As defined in W. Richard
 Stevens' 1990 book, [*UNIX Network Programming*][] (Addison-Wesley, 1990),
@@ -35,7 +35,7 @@ See the [*man* page][] for full details.
 [*man* page]: daemonize.html
 [*UNIX Network Programming*]: http://www.kohala.com/start/unp.html
 
-## Notes
+# Notes
 
 * If the host operating system provides the *daemon*(3) library routine,
   *daemonize* will use it. Otherwise, *daemonize* uses its own version of
@@ -47,7 +47,7 @@ See the [*man* page][] for full details.
 
 [FreeBSD]: http://www.freebsd.org/
 
-## Getting *daemonize*
+# Getting *daemonize*
 
 *daemonize* is written in C. Given the number of Unix-like operating
 systems, and the number of releases of each, it is impractical for me to
@@ -57,13 +57,13 @@ build *daemonize* from source code, as described below.
 
 There are two ways to get the source code:
 
-### Download a release zip
+## Download a release zip
 
 You can download a release zip file, containing the source, from the
 [downloads page][]. Just unzip the file to unpack the source
 directory.
 
-### Clone the Git repository
+## Clone the Git repository
 
 You can also simply clone the *git* repository, using one of the following
 commands.
@@ -73,7 +73,7 @@ commands.
 
 [downloads page]: http://github.com/bmc/daemonize/downloads
 
-## Installation
+# Installation
 
 Once you've unpacked the source, change your working directory to the
 *daemonize* directory. From there, building and installing the code is
@@ -87,7 +87,7 @@ For a detailed report of the available `configure` options:
 
     $ sh configure --help
 
-## Notes
+# Notes
 
 I have personally compiled and tested daemonize on the following platforms:
 
@@ -101,18 +101,18 @@ I have personally compiled and tested daemonize on the following platforms:
 The accompanying "configure" script was generated with GNU autoconf
 version 2.1.3. It should work, as is, for most Unix systems.
 
-## Change Log
+# Change Log
 
 See the *daemonize* [Change Log][] for a description of the changes in
 each version.
 
 [Change Log]: https://github.com/bmc/daemonize/blob/master/CHANGELOG.md
 
-## Author
+# Author
 
 Brian Clapper, *bmc@clapper.org*
 
-## Web Page
+# Web Page
 
 * [Home Page][daemonize-home]
 * [GitHub repo][github-repo]
@@ -120,19 +120,19 @@ Brian Clapper, *bmc@clapper.org*
 [daemonize-home]: http://software.clapper.org/daemonize
 [github-repo]: http://github.com/bmc/daemonize
 
-## License
+# License
 
 With the exception of the `install-sh` script and the `getopt.c` source,
 this software is released under BSD license. See the [license][] for details.
 
 [license]: license.html
 
-## Copyright
+# Copyright
 
 With the exception of the "install-sh" script and the "getopt.c" source,
 this software is copyright 2003-2011, Brian M. Clapper
 
-## Patches
+# Patches
 
 I gladly accept patches from their original authors. Feel free to email
 patches to me or to fork the [GitHub repository][github-repo] and send me a
