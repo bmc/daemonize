@@ -106,7 +106,7 @@ version 2.1.3. It should work, as is, for most Unix systems.
 See the *daemonize* [Change Log][] for a description of the changes in
 each version.
 
-[Change Log]: https://github.com/bmc/daemonize/blob/master/CHANGELOG.md
+[Change Log]: CHANGELOG.html
 
 # Author
 
