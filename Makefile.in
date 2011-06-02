@@ -49,3 +49,8 @@ clean:
 distclean:	clean
 	rm -rf config.status config.log config.cache config.h Makefile autom?te.cache
 
+# Copy stuff to the gh-pages directory. I doubt you want to use this target,
+# unless you're maintaining the web site (i.e., unless you're me).
+gh: daemonize.html CHANGELOG.md ../gh-pages/changelog-header
+	cp daemonize.html ../gh-pages
+	cat ../gh-pages/changelog-header CHANGELOG.md >../gh-pages/CHANGELOG.md
