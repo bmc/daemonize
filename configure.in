@@ -231,6 +231,9 @@ AC_CHECK_FUNC(basename, AC_DEFINE(HAVE_BASENAME),
 AC_CHECK_FUNC(setenv, AC_DEFINE(HAVE_SETENV),
 	      LOCAL_MISSING_SOURCES="${LOCAL_MISSING_SOURCES} setenv.c")
 
+AC_CHECK_FUNC(flock, AC_DEFINE(HAVE_FLOCK),
+	      LOCAL_MISSING_SOURCES="${LOCAL_MISSING_SOURCES} flock.c")
+
 AC_SUBST(LOCAL_MISSING_SOURCES)
 
 dnl ---------------------------------------------------------------------------

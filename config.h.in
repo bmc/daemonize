@@ -134,6 +134,9 @@
 /* Define if you have the setenv(3) function. */
 #undef HAVE_SETENV
 
+/* Define if you have the flock(3) function. */
+#undef HAVE_FLOCK
+
 /*****************************************************************************\
                      DON'T TOUCH ANYTHING BELOW HERE!
 \*****************************************************************************/
@@ -239,6 +242,10 @@ extern char *basename (char *path);
 
 #ifdef HAVE_LIBGEN_H
 #include <libgen.h>
+#endif
+
+#ifndef HAVE_FLOCK
+#include "flock.h"
 #endif
 
 #endif /* _CONFIG_H_ */
