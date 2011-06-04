@@ -54,7 +54,7 @@ static void redirect_fds()
 
    if (open("/dev/null", O_RDWR) != 0)
    {
-       syslog(LOG_ERROR, "Unable to open /dev/null: %s", strerror(errno));
+       syslog(LOG_ERR, "Unable to open /dev/null: %s", strerror(errno));
        exit(1);
    }
 
