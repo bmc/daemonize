@@ -1,7 +1,10 @@
 /*---------------------------------------------------------------------------*\
   NAME
 	flock.c - flock(2), emulated (more or less) in terms of
-                  lockf
+                  lockf(3)
+
+  BUGS
+        Doesn't support shared locks.
 
   LICENSE
 
