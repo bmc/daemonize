@@ -2,10 +2,20 @@
 title: daemonize - Changelog
 layout: default
 ---
+
 daemonize Change Log
 ====================
 
-Changes in version 1.7:
+Changes in version 1.7.1:
+
+- Added emulator for *flock*(2) file locking call, emulated in terms of
+  *lockf*(3), for systems (like Solaris) that don't have *flock*. Addresses
+  [Issue #3][]. Tested on Solaris 11 (x86).
+  
+[Issue #3]: https://github.com/bmc/daemonize/issues/3
+
+-----------------------------------------------------------------------------
+Changes in version 1.7.0:
 
 - Now supports a `-E` parameter, which allows setting one or more environment
   variables, to be passed to the daemon. Based on a suggestion from

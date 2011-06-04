@@ -93,7 +93,7 @@ I have personally compiled and tested daemonize on the following platforms:
 
 * FreeBSD 4.x, 8.0-RELEASE, 8.1-RELEASE and 8.2-RELEASE
 * Red Hat Enterprise Linux 4 / CentOS 4
-* Solaris (SunOS 5.8)
+* Solaris (SunOS 5.8, 5.10)
 * Fedora Core 5
 * Ubuntu 8, 9, 10, and 11
 * Mac OS X 10.4 (Tiger) and 10.6 (Snow Leopard)
