@@ -6,6 +6,11 @@ layout: default
 daemonize Change Log
 ====================
 
+Changes in version 1.7.2:
+
+- Fixed bad reference to `LOG_ERROR` in `daemon.c`, causing compilation 
+  problems (Should have been `LOG_ERR`.)
+-----------------------------------------------------------------------------
 Changes in version 1.7.1:
 
 - Added emulator for *flock*(2) file locking call, emulated in terms of
