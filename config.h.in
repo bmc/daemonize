@@ -103,6 +103,9 @@
 /* Define if you have the strerror() function. */
 #undef HAVE_STRERROR
 
+/* Define if you have initgroups() */
+#undef HAVE_INITGROUPS
+
 /* Define if you have vfork() */
 #undef HAVE_VFORK
 
