@@ -1,6 +1,11 @@
 daemonize Change Log
 ====================
 
+Changes in version 1.7.3:
+
+- Merged patch from Ewan Mellor (ewan.mellor _at_ citrix.com) that adds an
+  appropriate definition for `HAVE_INITGROUPS` to `config.h.in`.
+-----------------------------------------------------------------------------
 Changes in version 1.7.2:
 
 - Fixed bad reference to `LOG_ERROR` in `daemon.c`, causing compilation 
