@@ -38,6 +38,7 @@
 
 static const char  *pid_file   = NULL;
 static const char  *out_file   = NULL;
+static const char  *in_file    = NULL;
 static const char  *err_file   = NULL;
 static const char  *lock_file  = NULL;
 static bool         be_verbose = FALSE;
@@ -46,6 +47,7 @@ static char       **cmd        = NULL;
 static const char  *cwd        = "/";
 static int          null_fd    = -1;
 static int          out_fd     = -1;
+static int          in_fd      = -1;
 static int          err_fd     = -1;
 static int          append     = 0;
 static const char **env        = NULL;
@@ -112,6 +114,7 @@ static void usage(char *prog)
 "-e <stderr>    Send daemon's stderr to file <stderr>, instead of /dev/null.",
 "-E var=value   Pass environment setting to daemon. May appear multiple times.",
 "-o <stdout>    Send daemon's stdout to file <stdout>, instead of /dev/null.",
+"-i <stdin>     Async read daemon's stdin from file <stdin>, instead of /dev/null.",
 "-p <pidfile>   Save PID to <pidfile>.",
 "-u <user>      Run daemon as user <user>. Requires invocation as root.",
 "-l <lockfile>  Single-instance checking using lockfile <lockfile>.",
@@ -193,7 +196,7 @@ static void parse_params(int argc, char **argv)
       Using x_getopt() ensures that daemonize uses its own version, which
       always behaves consistently.
     */
-    while ( (opt = x_getopt(argc, argv, "ac:u:p:vo:e:E:l:")) != -1)
+    while ( (opt = x_getopt(argc, argv, "ac:u:p:vo:i:e:E:l:")) != -1)
     {
         switch (opt)
         {
@@ -219,6 +222,10 @@ static void parse_params(int argc, char **argv)
 
             case 'o':
                 out_file = x_optarg;
+                break;
+
+            case 'i':
+                in_file = x_optarg;
                 break;
 
             case 'e':
@@ -342,6 +349,15 @@ static int open_output_file(const char *path)
     return open(path, flags, 0666);
 }
 
+static int open_input_file(const char *path)
+{
+    int flags = O_CREAT|O_RDWR|O_ASYNC;
+
+        verbose("Reading %s\n", path);
+
+    return open(path, flags, 0666);
+}
+
 /**
  * Opens all output files.
  */
@@ -353,9 +369,6 @@ static void open_output_files()
     {
         if ((null_fd = open("/dev/null", O_WRONLY)) == -1)
             die("Can't open /dev/null: %s\n", strerror (errno));
-
-        close(STDIN_FILENO);
-        dup2(null_fd, STDIN_FILENO);
 
         if (out_file != NULL)
         {
@@ -390,21 +403,43 @@ static void open_output_files()
     }
 }
 
+static void open_input_files()
+{
+    /* open files for stdin */
+
+    if ((in_file != NULL))
+    {
+        if ((null_fd = open("/dev/null", O_WRONLY)) == -1)
+            die("Can't open /dev/null: %s\n", strerror (errno));
+
+        if ((in_fd = open_input_file(in_file)) == -1)
+        {
+            die("Can't open \"%s\" for stdout: %s\n", 
+                in_file, strerror(errno));
+        }
+    }
+
+    else 
+    {
+        in_fd = null_fd;
+    }
+}
+
 /**
  * Redirects standard output and error to someplace safe.
  */
-static int redirect_stdout_stderr()
+static int redirect_stdout_stderr_stdin()
 {
     int rc = 0;
 
     /* Redirect stderr/stdout */
 
-    if ((out_file != NULL) || (err_file != NULL))
+    if ((out_file != NULL) || (err_file != NULL) || (in_file != NULL))
     {
         close(STDIN_FILENO);
         close(STDOUT_FILENO);
         close(STDERR_FILENO);
-        dup2(null_fd, STDIN_FILENO);
+        dup2(in_fd, STDIN_FILENO);
         dup2(out_fd, STDOUT_FILENO);
         dup2(err_fd, STDERR_FILENO);
         rc = 1;
@@ -479,6 +514,7 @@ int main(int argc, char **argv)
         switch_user(user, uid, pid_file);
 
     open_output_files();
+    open_input_files();
 
     if (chdir (cwd) != 0)
     {
@@ -488,7 +524,7 @@ int main(int argc, char **argv)
 
     verbose("Daemonizing...");
 
-    if (redirect_stdout_stderr())
+    if (redirect_stdout_stderr_stdin())
         noclose = 1;
 
     if (daemon (1, noclose) != 0)
