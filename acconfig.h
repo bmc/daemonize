@@ -122,6 +122,12 @@ typedef __sighandler_t  *sig_t;
 extern char *strerror (int errnum);
 #endif /* HAVE_STRERROR */
 
+extern int x_getopt (int argc, char **argv, const char *opts);
+extern int x_opterr;
+extern int x_optind;
+extern int x_optopt;
+extern char *x_optarg;
+
 #ifndef HAVE_DAEMON
 extern int daemon (int nochdir, int noclose);
 #endif
