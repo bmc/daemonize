@@ -6,3 +6,4 @@ config.log
 config.status
 config.cache
 Makefile
+autom4te.cache
