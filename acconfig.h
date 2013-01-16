@@ -53,9 +53,6 @@
 /* Define if you have the daemon() function. */
 #undef HAVE_DAEMON
 
-/* Define if you have the getopt() function. */
-#undef HAVE_GETOPT
-
 /* Define if you have the strerror() function. */
 #undef HAVE_STRERROR
 
@@ -124,10 +121,6 @@ typedef __sighandler_t  *sig_t;
 #ifndef HAVE_STRERROR
 extern char *strerror (int errnum);
 #endif /* HAVE_STRERROR */
-
-#ifndef HAVE_GETOPT
-extern int getopt (int argc, char **argv, const char *opts);
-#endif /* HAVE_GETOPT */
 
 #ifndef HAVE_DAEMON
 extern int daemon (int nochdir, int noclose);
