@@ -1,3 +1,3 @@
-exclude: run-markdown.sh
+exclude: run-markdown.sh changelog-header
 pygments: false
 codeurl: http://software.clapper.org/thing
