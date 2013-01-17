@@ -1,6 +1,13 @@
 daemonize Change Log
 ====================
 
+Changes in version 1.7.4:
+
+- Merged `acconfig.h` patch from Andreas Müller
+  (schnitzeltony _at_ googlemail.com) that cleans up `getopt` references.
+- Moved version stamp into a header.
+
+-----------------------------------------------------------------------------
 Changes in version 1.7.3:
 
 - Merged patch from Ewan Mellor (ewan.mellor _at_ citrix.com) that adds an
