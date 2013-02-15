@@ -27,6 +27,21 @@
 #include "config.h"
 #include "version.h"
 
+#if WITH_PAM
+/* use syslog */
+#include <syslog.h>
+/* PAM may include <locale.h>. */
+# undef setlocale
+/* For some obscure reason, PAM is not in pam/xxx, but in security/xxx.
+ * Apparently they like to confuse people. */
+# include <security/pam_appl.h>
+# include <security/pam_misc.h>
+static const struct pam_conv conv = {
+    misc_conv,
+    NULL
+};
+#endif /* WITH_PAM */
+
 /*---------------------------------------------------------------------------*\
                                   Globals
 \*---------------------------------------------------------------------------*/
@@ -258,12 +273,53 @@ static void parse_params(int argc, char **argv)
 static void switch_user(const char *user_name, uid_t uid, const char *pid_file)
 {
     struct  passwd *pw;
+#if WITH_PAM
+    int pamret;
+    pam_handle_t *pamh;
+    const char *pamuser;
+    const char *failed_msg;
+    struct passwd pwdstruct;
+    char pwdbuf[256];
+#endif /* WITH_PAM */
 
     if (uid != 0)
         die("Must be root to specify a different user.\n");
 
     if ( (pw = getpwnam(user_name)) == NULL )
         die("Can't find user \"%s\" in password file.\n", user_name);
+
+#if WITH_PAM
+        pamret = pam_start("daemonize", user, &conv, &pamh);
+        if (pamret != PAM_SUCCESS) {
+            syslog(LOG_WARNING, "pam_%s call failed: %s (%d)", "start",
+                    pam_strerror(pamh, pamret), pamret);
+        }
+
+        pamret = pam_authenticate(pamh, 0);
+        if (pamret != PAM_SUCCESS) {
+            syslog(LOG_WARNING, "pam_%s call failed: %s (%d)", "authenticate",
+                    pam_strerror(pamh, pamret), pamret);
+        }
+        /* check that the account is healthy */
+        pamret = pam_acct_mgmt(pamh, 0);
+        if (pamret != PAM_SUCCESS) {
+            syslog(LOG_WARNING, "pam_%s call failed: %s (%d)", "acct_mgmt",
+                    pam_strerror(pamh, pamret), pamret);
+        }
+
+        pamret = pam_open_session(pamh, 0);
+        if (pamret != PAM_SUCCESS) {
+            syslog(LOG_WARNING, "pam_%s call failed: %s (%d)", "open_session",
+                    pam_strerror(pamh, pamret), pamret);
+        }
+        if (pamret == PAM_SUCCESS)
+        {
+            /* success */
+            syslog(LOG_INFO, "pam_limits call success: %s (%d)",
+                        pam_strerror(pamh, pamret), pamret);
+        }
+
+#endif /* WITH_PAM */
 
     if (setgid(pw->pw_gid) != 0)
         die("Can't set gid to %d: %s\n", pw->pw_gid, strerror (errno));
@@ -519,7 +575,6 @@ int main(int argc, char **argv)
 
     if (getenv("PATH") == NULL)
         setenv("PATH","/usr/local/sbin:/sbin:/bin:/usr/sbin:/usr/bin", 1);
-
     execvp(cmd[0], cmd);
 
     die("Can't exec \"%s\": %s\n", cmd[0], strerror (errno));
