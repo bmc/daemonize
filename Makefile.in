@@ -13,7 +13,7 @@ INSTALL_MAN    = $(INSTALL_PREFIX)/share/man
 MISSING_SOURCES	= @LOCAL_MISSING_SOURCES@
 MISSING_OBJECTS = $(MISSING_SOURCES:.c=.o)
 CC		= @CC@
-
+PAM_LIBS = @PAM_LIBS@
 .PHONY: all psman install clean distclean
 
 .c.o:
@@ -22,7 +22,7 @@ CC		= @CC@
 all: daemonize 
 
 daemonize: daemonize.o getopt.o $(MISSING_OBJECTS)
-	$(CC) $(CFLAGS) -o daemonize daemonize.o getopt.o $(MISSING_OBJECTS)
+	$(CC) $(CFLAGS) -o daemonize daemonize.o getopt.o $(MISSING_OBJECTS) $(PAM_LIBS)
 
 testdaemon: testdaemon.o
 	$(CC) $(CFLAGS) -o testdaemon testdaemon.o
