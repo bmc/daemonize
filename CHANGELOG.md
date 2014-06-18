@@ -1,6 +1,14 @@
 daemonize Change Log
 ====================
 
+Changes in version 1.7.5:
+
+- Added support for out-of-tree builds, per [Issue #12][]. Thanks to
+  @andy-js
+
+[Issue #12]: https://github.com/bmc/daemonize/issues/12
+
+-----------------------------------------------------------------------------
 Changes in version 1.7.4:
 
 - Merged `acconfig.h` patch from Andreas Müller

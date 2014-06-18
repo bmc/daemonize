@@ -17,7 +17,7 @@ CC		= @CC@
 .PHONY: all psman install clean distclean
 
 .c.o:
-	$(CC) $(CFLAGS) -c $< -I.
+	$(CC) $(CFLAGS) -c $< -I. -I$(srcdir)
 
 all: daemonize 
 
@@ -41,7 +41,7 @@ install:
 	mkdir -p $(DESTDIR)$(INSTALL_SBIN)
 	$(INSTALL) -m 0755 daemonize $(DESTDIR)$(INSTALL_SBIN)
 	mkdir -p $(DESTDIR)$(INSTALL_MAN)/man1
-	$(INSTALL) -m 0644 daemonize.1 $(DESTDIR)$(INSTALL_MAN)/man1
+	$(INSTALL) -m 0644 $(srcdir)/daemonize.1 $(DESTDIR)$(INSTALL_MAN)/man1
 
 clean:
 	rm -rf *.o daemonize testdaemon *.ps
