@@ -147,10 +147,14 @@ static void add_to_env(char opt, const char *envvar)
 
     char *name = (char *) malloc(name_len + 1);
     char *value = (char *) malloc(val_len + 1);
+    *name = '\0';
+    *value = '\0';
     (void) strncat(name, envvar, name_len);
     eq++;
     (void) strncat(value, eq, val_len);
     setenv(name, value, 1);
+    free(name);
+    free(value);
 }
 
 /**
