@@ -1,6 +1,13 @@
 daemonize Change Log
 ====================
 
+Changes in version 1.7.6:
+
+- Fixed potential memory allocation issues. See GitHub Issue #15
+  <https://github.com/bmc/daemonize/issues/15> and pull request #16
+  <https://github.com/bmc/daemonize/pull/16>. Thanks to Frederic Descamps
+  (frederic.descamps /at/ percona.com) for the fix.
+
 Changes in version 1.7.5:
 
 - Added support for out-of-tree builds, per [Issue #12][]. Thanks to
