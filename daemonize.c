@@ -147,6 +147,13 @@ static void add_to_env(char opt, const char *envvar)
 
     char *name = (char *) malloc(name_len + 1);
     char *value = (char *) malloc(val_len + 1);
+
+    if (name == NULL || value == NULL)
+        die("Cannot allocate memory for \"%s\" variable/value pair: %s\n",
+            envvar, strerror (errno));
+
+    *name = *value = '\0';
+
     (void) strncat(name, envvar, name_len);
     eq++;
     (void) strncat(value, eq, val_len);
