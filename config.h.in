@@ -140,6 +140,12 @@
 /* Define if you have the flock(3) function. */
 #undef HAVE_FLOCK
 
+/* Define to 1 if you have the `libpam,libpam_misc' library (-lpam,-lpam_misc). */
+#undef HAVE_PAM
+
+/* PAM support. */
+#undef WITH_PAM
+
 /*****************************************************************************\
                      DON'T TOUCH ANYTHING BELOW HERE!
 \*****************************************************************************/

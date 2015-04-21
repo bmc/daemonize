@@ -34,7 +34,6 @@ dnl Autoconf file for daemonize
 dnl
 dnl Process this file with autoconf to produce a configure script.
 dnl ---------------------------------------------------------------------------
-
 AC_INIT(daemonize.c)
 AC_CONFIG_HEADER(config.h)
 
@@ -53,6 +52,7 @@ AC_PROG_CPP
 
 AC_SUBST(CC)
 AC_SUBST(CPP)
+AC_SUBST(DAEMONIZE_LIBS)
 
 dnl ---------------------------------------------------------------------------
 dnl UNIX variant hacks
@@ -80,6 +80,24 @@ export CPPFLAGS
 dnl ---------------------------------------------------------------------------
 dnl Checks for libraries.
 dnl ---------------------------------------------------------------------------
+
+dnl check the existance of the libpam and libpam_misc
+AC_ARG_WITH([pam],
+    AS_HELP_STRING([--with-pam], [enable PAM support]),
+    [], [with_pam=no])
+if test "x$with_pam" = xyes; then
+    LIBS_save=$LIBS
+    AC_CHECK_LIB(pam, pam_start,
+        [],
+        AC_MSG_ERROR([PAM selected but libpam not found]))
+    AC_CHECK_LIB(pam_misc, misc_conv,
+        [],
+        AC_MSG_ERROR([PAM selected but libpam_misc not found]))
+    LIBS=$LIBS_save
+    PAM_LIBS="-lpam -lpam_misc"
+    AC_DEFINE(WITH_PAM, [1] ,[PAM support.])
+fi
+AC_SUBST([PAM_LIBS])
 
 dnl ---------------------------------------------------------------------------
 dnl Checks for typedefs, structures, and compiler characteristics.
