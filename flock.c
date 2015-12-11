@@ -11,7 +11,7 @@
 	This source code is released under a BSD-style. See the LICENSE
         file for details.
 
-  Copyright (c) 2011 Brian M. Clapper, bmc <at> clapper <dot> org
+  Copyright (c) 2011-2015 Brian M. Clapper, bmc@clapper.org
 \*---------------------------------------------------------------------------*/
 
 /*---------------------------------------------------------------------------*\
