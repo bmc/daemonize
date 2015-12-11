@@ -64,14 +64,15 @@ x_getopt(int argc, char **argv, const char *opts)
 	register int c;
 	register char *cp;
 
-	if(sp == 1)
+	if(sp == 1) {
 		if(x_optind >= argc ||
-		   argv[x_optind][0] != '-' || argv[x_optind][1] == '\0')
+		   argv[x_optind][0] != '-' || argv[x_optind][1] == '\0') {
 			return(EOF);
-		else if(strcmp(argv[x_optind], "--") == 0) {
+                } else if(strcmp(argv[x_optind], "--") == 0) {
 			x_optind++;
 			return(EOF);
 		}
+        }
 	x_optopt = c = argv[x_optind][sp];
 	if(c == ':' || (cp=strchr(opts, c)) == NULL) {
 		ERR(": illegal option -- ", c);
