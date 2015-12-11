@@ -1,6 +1,12 @@
 daemonize Change Log
 ====================
 
+Changes in version 1.7.7:
+
+- CFLAGS and LDFLAGS not passed through from `configure` to `Makefile`. Fixes GitHub
+  Issue #20 <https://github.com/bmc/daemonize/issues/20>. Thanks to Andrew Stormont
+  (andyjstormont /at/ gmail.com) for the patch.
+
 Changes in version 1.7.6:
 
 - Fixed potential memory allocation issues. See GitHub Issue #15
