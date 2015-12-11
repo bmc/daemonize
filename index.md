@@ -60,7 +60,7 @@ There are two ways to get the source code:
 ## Download a release zip
 
 You can download a release zip file, containing the source, from the
-[downloads page][]. Just unzip the file to unpack the source
+[releases page][]. Just unzip the file to unpack the source
 directory.
 
 ## Clone the Git repository
@@ -71,7 +71,7 @@ commands.
     $ git clone git://github.com/bmc/daemonize.git
     $ git clone http://github.com/bmc/daemonize.git
 
-[downloads page]: http://github.com/bmc/daemonize/downloads
+[releases page]: https://github.com/bmc/daemonize/releases
 
 # Installation
 
@@ -106,7 +106,7 @@ version 2.1.3. It should work, as is, for most Unix systems.
 See the *daemonize* [Change Log][] for a description of the changes in
 each version.
 
-[Change Log]: CHANGELOG.html
+[Change Log]: https://github.com/bmc/daemonize/blob/master/CHANGELOG.md
 
 # Author
 
@@ -130,7 +130,7 @@ this software is released under BSD license. See the [license][] for details.
 # Copyright
 
 With the exception of the "install-sh" script and the "getopt.c" source,
-this software is copyright 2003-2011, Brian M. Clapper
+this software is copyright 2003-2015, Brian M. Clapper
 
 # Patches
 
