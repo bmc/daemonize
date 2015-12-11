@@ -52,8 +52,15 @@ See the [*man* page][] for full details.
 *daemonize* is written in C. Given the number of Unix-like operating
 systems, and the number of releases of each, it is impractical for me to
 provide binaries of *daemonize* for every combination of Unix-like
-operating system and operating system release. So, currently, you must
-build *daemonize* from source code, as described below.
+operating system and operating system release.
+
+If you're on a Mac, you can use [homebrew](http://mxcl.github.com/homebrew/)
+to instsall *daemonize*, like so:
+
+    $ brew install daemonize
+
+If you're on any other Unix-like operating system, you must build
+*daemonize* from source code, as described below.
 
 There are two ways to get the source code:
 
@@ -92,14 +99,14 @@ For a detailed report of the available `configure` options:
 I have personally compiled and tested daemonize on the following platforms:
 
 * FreeBSD 4.x, 8.0-RELEASE, 8.1-RELEASE and 8.2-RELEASE
-* Red Hat Enterprise Linux 4 / CentOS 4
+- Red Hat Enterprise Linux 4 / CentOS 4
 * Solaris (SunOS 5.8, 5.10)
-* Fedora Core 5
-* Ubuntu 8, 9, 10, and 11
-* Mac OS X 10.4 (Tiger) and 10.6 (Snow Leopard)
+- Fedora Core 5
+- Ubuntu 8, 9, 10, 11 and 12
+- Mac OS X 10.4 (Tiger) and 10.6 through 10.8.
 
 The accompanying "configure" script was generated with GNU autoconf
-version 2.1.3. It should work, as is, for most Unix systems.
+version 2.69. It should work, as is, for most Unix systems.
 
 # Change Log
 
