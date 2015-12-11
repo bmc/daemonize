@@ -21,24 +21,22 @@ Changes in version 1.7.5:
 
 [Issue #12]: https://github.com/bmc/daemonize/issues/12
 
------------------------------------------------------------------------------
 Changes in version 1.7.4:
 
 - Merged `acconfig.h` patch from Andreas Müller
   (schnitzeltony _at_ googlemail.com) that cleans up `getopt` references.
 - Moved version stamp into a header.
 
------------------------------------------------------------------------------
 Changes in version 1.7.3:
 
 - Merged patch from Ewan Mellor (ewan.mellor _at_ citrix.com) that adds an
   appropriate definition for `HAVE_INITGROUPS` to `config.h.in`.
------------------------------------------------------------------------------
+
 Changes in version 1.7.2:
 
 - Fixed bad reference to `LOG_ERROR` in `daemon.c`, causing compilation 
   problems (Should have been `LOG_ERR`.)
------------------------------------------------------------------------------
+
 Changes in version 1.7.1:
 
 - Added emulator for *flock*(2) file locking call, emulated in terms of
@@ -47,21 +45,18 @@ Changes in version 1.7.1:
   
 [Issue #3]: https://github.com/bmc/daemonize/issues/3
 
------------------------------------------------------------------------------
 Changes in version 1.7.0:
 
 - Now supports a `-E` parameter, which allows setting one or more environment
   variables, to be passed to the daemon. Based on a suggestion from
   Michel Gouget *michel /at/ gouget.org*.
 
------------------------------------------------------------------------------
 Changes in version 1.6.2:
 
 - Local copy of daemon(3) now errors out (with a message to syslog(3)) if
   it cannot open /dev/null. Thanks to Folkert van Heusden
   *folkert.mobiel /at/ gmail.com* for noticing the problem.
 
------------------------------------------------------------------------------
 Changes in version 1.6.1:
 
 - Makefile now generates daemonize.html, an HTML-ized version of the man page.
@@ -71,7 +66,6 @@ Changes in version 1.6.1:
 
 [Sam Pierson]: http://sampierson.com/blog
 
------------------------------------------------------------------------------
 Changes in version 1.6:
 
 Rolled in changes submitted by Ken D. Farnen, (kenf /at/ 14Cubed.COM):
@@ -92,13 +86,11 @@ Rolled in changes submitted by Ken D. Farnen, (kenf /at/ 14Cubed.COM):
   the login code. Daemonize now initializes those group memberships, as
   well, if the initgroups() function is present.
 
------------------------------------------------------------------------------
 Changes in version 1.5.6:
 
 - Accepted and applied a patch from Gary T. Giesen (giesen /at/ snickers.org)
   that allows the daemonize Makefile to play well with Linux RPMs.
 
------------------------------------------------------------------------------
 Changes in version 1.5.5:
 
 - Changes in 1.5.4 made it impossible to create PID files in directories
@@ -107,7 +99,6 @@ Changes in version 1.5.5:
   corrected slightly to ensure that the proper PID is written and that the
   PID file has mode 0644.
 
------------------------------------------------------------------------------
 Changes in version 1.5.4:
 
 - If a user name is specified via the -u option, the output files specified
@@ -120,14 +111,12 @@ Changes in version 1.5.4:
 
 - Added some documentation to the code.
 
------------------------------------------------------------------------------
 Changes in version 1.5.3:
 
 - Minor licensing change. (configure.in still emitted a message indicated
   that daemonize is GPL-licensed. It's BSD-licensed.)
 - Updated copyright information.
 
------------------------------------------------------------------------------
 Changes in version 1.5.2:
 
 Two changes suggested and supplied by Yakov Lerner <iler.ml <at> gmail.com>:
@@ -138,12 +127,10 @@ Two changes suggested and supplied by Yakov Lerner <iler.ml <at> gmail.com>:
 - Now makes additional checks to ensure that the program specified to
   daemonize is a regular file, not a directory.
 
------------------------------------------------------------------------------
 Changes in version 1.5.1:
 
 - Now released under BSD-style license, not GNU Public License.
 
------------------------------------------------------------------------------
 Changes in version 1.5:
 
 - daemonize can now optionally redirect the daemon's standard output and
@@ -151,7 +138,6 @@ Changes in version 1.5:
 
 - configure now supports a local basename() emulator.
 
------------------------------------------------------------------------------
 Changes in version 1.4:
 
 - Version of daemon(3) shipped with daemonize attempted to redirect
@@ -171,12 +157,10 @@ Changes in version 1.4:
 
 - daemonize now installs with 0755 permissions, instead of 0700.
 
------------------------------------------------------------------------------
 Changes in version 1.3:
 
 - The "-c" option now actually works. Duh.
 
------------------------------------------------------------------------------
 Changes in version 1.2:
 
 - The external names in getopt.c are now prefixed with "x_" (e.g.,
@@ -186,7 +170,6 @@ Changes in version 1.2:
   to Michael Fuchs <mf /at/ mfox /dot/ de> for pointing out the problem
   on Solaris.
 
------------------------------------------------------------------------------
 Changes in version 1.1:
 
 - Now uses local getopt.c unconditionally, instead of defaulting to
