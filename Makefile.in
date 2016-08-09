@@ -24,10 +24,10 @@ LDFLAGS		= @LDFLAGS@
 all: daemonize 
 
 daemonize: daemonize.o getopt.o $(MISSING_OBJECTS)
-	$(CC) $(CFLAGS) -o $@ $^
+	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $^
 
 testdaemon: testdaemon.o
-	$(CC) $(CFLAGS) -o $@ $^
+	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $^
  
 psman: daemonize.ps
 
