@@ -19,6 +19,7 @@
 #include <string.h>
 #include <unistd.h>
 #include <sys/types.h>
+#include <grp.h>
 #include <pwd.h>
 #include <stdarg.h>
 #include <fcntl.h>
@@ -43,7 +44,6 @@ static int          null_fd    = -1;
 static int          out_fd     = -1;
 static int          err_fd     = -1;
 static int          append     = 0;
-static const char **env        = NULL;
 
 /*---------------------------------------------------------------------------*\
                              Private Functions
