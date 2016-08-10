@@ -1,5 +1,5 @@
 /* Version stamp */
 
 #ifndef VERSION
-#define VERSION "1.7.7"
+#define VERSION "1.7.8"
 #endif

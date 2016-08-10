@@ -1,6 +1,11 @@
 daemonize Change Log
 ====================
 
+Changes in version 1.7.8:
+
+- Fixed various compiler and cross-linking issues. Thanks to
+  @derekstraka for the patch.
+
 Changes in version 1.7.7:
 
 - CFLAGS and LDFLAGS not passed through from `configure` to `Makefile`. Fixes GitHub
