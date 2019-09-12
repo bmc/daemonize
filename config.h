@@ -10,88 +10,8 @@
 #ifndef _CONFIG_H_
 #define _CONFIG_H_
 
+#include <auto_config.h>
 #include <sys/types.h>
-
-@@TOP@@
-
-/* define if your C compiler lacks a built-in `bool' type */
-#undef bool
-
-/* define to `int' if your system lacks `ssize_t' */
-#undef ssize_t
-
-/* define to `unsigned short' if your system lacks `ushort' */
-#undef ushort
-
-/*
-   Define if you have the `sig_t' type in <signal.h> or <sys/signal.h>
-   (e.g., FreeBSD)
-*/
-#undef HAVE_SIG_T
-
-/*
-  Define if your compiler supports a native "byte" type that holds at least
-  eight bits.
-*/
-#undef HAVE_BYTE_TYPE
-
-/* Define if you have the getpgrp() function. */
-#undef HAVE_GETPGRP
-
-/* Define if you have the setpgrp() function. */
-#undef HAVE_SETPGRP
-
-/* Define if you have the initgroups() function. */
-#undef HAVE_INITGROUPS
-
-/* Define if you have the setsid() function. Almost everyone does. */
-#undef HAVE_SETSID
-
-/* Define if you have the sysconf() function. */
-#undef HAVE_SYSCONF
-
-/* Define if you have the daemon() function. */
-#undef HAVE_DAEMON
-
-/* Define if you have the strerror() function. */
-#undef HAVE_STRERROR
-
-/* Define if you have vfork() */
-#undef HAVE_VFORK
-
-/* Define if you have vprintf() */
-#undef HAVE_VPRINTF
-
-/* Define if you have the `pw_comment' field in `struct passwd' (pwd.h) */
-#undef HAVE_PW_COMMENT
-
-/* Define if you have the `pw_gecos' field in `struct passwd' (pwd.h) */
-#undef HAVE_PW_GECOS
-
-/* Define to `long' if you don't have `off_t' */
-#undef off_t
-
-/* Define to `int' if you don't have `mode_t' */
-#undef mode_t
-
-/* Define to `int' if you don't have `pid_t' */
-#undef pid_t
-
-/* Define to `int' if you don't have `gid_t' and `uid_t' */
-#undef uid_t
-#undef gid_t
-
-/* Define to `unsigned' if you don't have `size_t' */
-#undef size_t
-
-/* Define if you have <errno.h> */
-#undef HAVE_ERRNO_H
-
-@@BOTTOM@@
-
-/*****************************************************************************\
-                     DON'T TOUCH ANYTHING BELOW HERE!
-\*****************************************************************************/
 
 #ifndef HAVE_BYTE_TYPE
 typedef unsigned char	byte;		     /* 8 bit unsigned critter */
