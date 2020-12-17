@@ -25,7 +25,11 @@
 #include <fcntl.h>
 #include <sys/stat.h>
 #include <sys/file.h>
+#ifndef ANDROID
 #include "config.h"
+#else
+#include "android-config.h"
+#endif
 #include "version.h"
 
 /*---------------------------------------------------------------------------*\
@@ -95,7 +99,7 @@ static void verbose(const char *format, ...)
  */
 static void usage(char *prog)
 {
-    static const char *USAGE[] = 
+    static const char *USAGE[] =
     {
 "Usage: %s [OPTIONS] path [arg] ...",
 "",
@@ -360,12 +364,12 @@ static void open_output_files()
         {
             if ((out_fd = open_output_file(out_file)) == -1)
             {
-                die("Can't open \"%s\" for stdout: %s\n", 
+                die("Can't open \"%s\" for stdout: %s\n",
                     out_file, strerror(errno));
             }
         }
 
-        else 
+        else
         {
             out_fd = null_fd;
         }
@@ -377,7 +381,7 @@ static void open_output_files()
 
             else if ((err_fd = open_output_file(err_file)) == -1)
             {
-                die("Can't open \"%s\" for stderr: %s\n", 
+                die("Can't open \"%s\" for stderr: %s\n",
                     err_file, strerror (errno));
             }
         }
@@ -530,4 +534,3 @@ int main(int argc, char **argv)
 }
 
 /*  vim: set et sw=4 sts=4 : */
-
