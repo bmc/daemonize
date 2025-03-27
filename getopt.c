@@ -45,7 +45,7 @@
 #include <string.h>
 
 #define ERR(s, c)	if(x_opterr){\
-	extern int write();\
+	extern int write(int, const void *, unsigned);\
 	char errbuf[2];\
 	errbuf[0] = c; errbuf[1] = '\n';\
 	(void) write(2, argv[0], (unsigned)strlen(argv[0]));\
