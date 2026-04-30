@@ -1,7 +1,7 @@
 *.o
 daemonize
 daemonize.html
-config.h
+auto_config.h
 config.log
 config.status
 config.cache

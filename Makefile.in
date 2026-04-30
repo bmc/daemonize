@@ -49,7 +49,7 @@ clean:
 	rm -rf *.o daemonize testdaemon *.ps
 
 distclean:	clean
-	rm -rf config.status config.log config.cache config.h Makefile autom?te.cache
+	rm -rf config.status config.log config.cache auto_config.h Makefile autom?te.cache
 
 # Copy stuff to the gh-pages directory. I doubt you want to use this target,
 # unless you're maintaining the web site (i.e., unless you're me).

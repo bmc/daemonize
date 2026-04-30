@@ -36,7 +36,27 @@ dnl Process this file with autoconf to produce a configure script.
 dnl ---------------------------------------------------------------------------
 
 AC_INIT(daemonize.c)
-AC_CONFIG_HEADER(config.h)
+AC_CONFIG_HEADER(auto_config.h)
+
+dnl ---------------------------------------------------------------------------
+dnl Autoconf template
+dnl ---------------------------------------------------------------------------
+
+AH_TEMPLATE([HAVE_BASENAME])
+AH_TEMPLATE([HAVE_FLOCK])
+AH_TEMPLATE([HAVE_GETPGRP])
+AH_TEMPLATE([HAVE_INITGROUPS])
+AH_TEMPLATE([HAVE_PW_COMMENT])
+AH_TEMPLATE([HAVE_PW_GECOS])
+AH_TEMPLATE([HAVE_SETENV])
+AH_TEMPLATE([HAVE_SETPGRP])
+AH_TEMPLATE([bool])
+AH_TEMPLATE([HAVE_DAEMON])
+AH_TEMPLATE([HAVE_FALSE])
+AH_TEMPLATE([HAVE_SETSID])
+AH_TEMPLATE([HAVE_SIG_T])
+AH_TEMPLATE([HAVE_STRERROR])
+AH_TEMPLATE([HAVE_TRUE])
 
 dnl ---------------------------------------------------------------------------
 dnl Directories and package-specific vars
